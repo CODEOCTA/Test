@@ -1,0 +1,87 @@
+USE [ZydusTakedaOHS]
+GO
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Pranay
+-- Description:	Get Roles definition
+-- =============================================
+CREATE PROCEDURE USP_GetRoleDefinition 
+	-- Add the parameters for the stored procedure here
+	@RoleName			Nvarchar(Max)
+AS
+BEGIN
+	
+	SET NOCOUNT ON;
+	Declare	 @SQLQuery			Varchar(Max)
+
+	If Object_Id('tempdb.dbo.#RoleDefinition') Is Not Null Drop Table #RoleDefinition;
+	Create Table #RoleDefinition
+	(
+		 DefId							Int Identity(1,1) Primary Key
+		,Definition						Nvarchar(1000)		
+	)
+	Insert Into #RoleDefinition
+	(
+		 Definition
+	)
+	values('ALL rights of add/ update pages and reporting.')
+		  ,('View all pages of medical reports and analytics.')	
+		  ,('All rights of add/update pages')
+		  ,('View all reports and analytics')
+		  ,('System configuration related')
+		  ,('View specific to their medical checkup reports only.')
+		  ,('View specific to their departments users medical checkup reports only.')			
+		  
+	If Object_Id('tempdb.dbo.#AssignedDefinition') Is Not Null Drop Table #AssignedDefinition;
+	Create Table #AssignedDefinition
+	(
+		 Id							Int Identity(1,1) Primary Key
+		,Role						Nvarchar(500)		
+		,DefinitionIds				varchar(20)
+	)
+	Insert Into #AssignedDefinition
+	(
+		  Role		
+		 ,DefinitionIds
+	)
+	values('System Administrator','1')
+		  ,('Management','2')
+		  ,('IT Team','4,5')
+		  ,('EHS Team','4,5')
+		  ,('HR Team','4,5')
+		  ,('Medical Officer','3,4,5')
+		  ,('OHS Coordinator','3,4,5')
+		  ,('Department Head','7')
+		  ,('Department User','6')
+
+	Select	@SQLQuery = 'select Distinct RL.Definition
+						from #RoleDefinition as RL 
+						outer join #AssignedDefinition as AD 
+						where Exists(Select 1 From dbo.UDF_GetSplitValues(AD.DefinitionIds, '','') As map Where map.DefinitionIds = RL.DefId)'
+	--Print(@SQLQuery)
+	If Object_Id('tempdb.dbo.#ResultOP') Is Not Null Drop Table #ResultOP;
+	Create Table #ResultOP
+	(
+		 
+		DefResult					Nvarchar(max)		
+	)
+	Insert Into #ResultOP
+	(
+		DefResult
+	)
+	Exec(@SQLQuery)
+			
+
+			Select	 *
+	From	#ResultOP As ROP With (Nolock)
+	
+	If Object_Id('tempdb.dbo.#RoleDefinition') Is Not Null Drop Table #RoleDefinition;
+	If Object_Id('tempdb.dbo.#AssignedDefinition') Is Not Null Drop Table #AssignedDefinition;
+	If Object_Id('tempdb.dbo.#ResultOP') Is Not Null Drop Table #ResultOP;
+
+END
+GO
