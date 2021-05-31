@@ -15,3 +15,124 @@ Kheer
 
 Thanks!   :)
 Final Copy.
+
+//====================================================================================================================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSharp_Practice
+{
+    class Class1
+    {
+         public static void Main(string[] args)
+        {
+            Dictionary<string, string[]> RoleDefDictionary = new  Dictionary<string, string[]>();
+
+            RoleDefDictionary.Add("System Administrator", new string[] { "ALL rights of add/ update pages and reporting." });
+            RoleDefDictionary.Add("OHS Coordinator", new string[] { "View all pages of medical reports and analytics." });
+            RoleDefDictionary.Add("Department Head", new string[] { "View specific to their medical checkup reports only." });
+            RoleDefDictionary.Add("Department User", new string[] { "View specific to their departments users medical checkup reports only." });
+            RoleDefDictionary.Add("IT Team", new string[] { "View all reports and analytics", "System configuration related"});
+            RoleDefDictionary.Add("EHS Team", new string[] { "View all reports and analytics", "System configuration related" });
+            RoleDefDictionary.Add("HR Team", new string[] { "View all reports and analytics", "System configuration related" });
+            RoleDefDictionary.Add("Medical Officer", new string[] { "All rights of add/update pages", "View all reports and analytics", "System configuration related" });
+            RoleDefDictionary.Add("Management", new string[] { "All rights of add/update pages", "View all reports and analytics", "System configuration related" });
+
+
+            Dictionary<string, string> InputDictionary = new Dictionary<string, string>();
+
+            InputDictionary.Add("UsrRoleName", "OHS Coordinator,System Administrator");
+            InputDictionary.Add("UsrRoleName2", "IT Team");
+            InputDictionary.Add("UsrRoleName3", "HR Team");
+            InputDictionary.Add("UsrRoleName4", "Management");
+
+            Dictionary<string, string>.ValueCollection inputs = InputDictionary.Values;
+            List<string> distinctRoleDefinitionL = new List<string>();
+            foreach (string input in inputs)
+            {
+                string[] values = input.Split(',');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = values[i].Trim();
+                    //Console.WriteLine("Array values "+values[i]);
+                    Console.WriteLine(values[i]);
+                    foreach (var key in RoleDefDictionary.Keys)
+                    {
+                        if (key.Contains(values[i]))
+                        {
+                            // Get and display values    
+                            string[] tempString = RoleDefDictionary[key];
+                            Dictionary<string, string[]>.ValueCollection myvalues = RoleDefDictionary.Values;
+                            //foreach (var val in myvalues)
+                            //{
+                            //    Console.WriteLine("Value in my dictionary : {0}", val);                            
+                            //}
+                            for (int y = 0; y < tempString.Length; y++)
+                            {
+                                Console.WriteLine(tempString[y]);
+                               
+                                distinctRoleDefinitionL.Add(tempString[y]);
+                               distinctRoleDefinitionL = distinctRoleDefinitionL.Distinct().ToList();
+
+                               Console.WriteLine("distimct Lists " + distinctRoleDefinitionL);
+                                //Console.WriteLine("Value in my dictionary " + tempString[y]);
+                            }
+                            //Console.WriteLine("Dictionary value array " + RoleDefDictionary[key]);
+                        }
+                    }
+
+                    //values[i].CompareTo(InputDictionary.Keys);
+                }
+            }
+
+            //#region yesterday 29-05-2021
+            //string[] values = InputDictionary["UsrRoleName4"].Split(',');
+            //for (int i = 0; i < values.Length; i++)
+            //{
+            //    values[i] = values[i].Trim();
+            //    //Console.WriteLine("Array values "+values[i]);
+            //    Console.WriteLine(values[i]);
+            //    foreach (var key in RoleDefDictionary.Keys)
+            //    {
+            //        if (key.Contains(values[i]))
+            //        {
+            //            // Get and display values    
+            //            string [] tempString = RoleDefDictionary[key];
+            //            Dictionary<string, string[]>.ValueCollection myvalues = RoleDefDictionary.Values;
+            //            //foreach (var val in myvalues)
+            //            //{
+            //            //    Console.WriteLine("Value in my dictionary : {0}", val);                            
+            //            //}
+            //            for (int y = 0; y < tempString.Length; y++)
+            //            {
+            //                Console.WriteLine(tempString[y]);
+            //                //Console.WriteLine("Value in my dictionary " + tempString[y]);
+            //            }
+            //         //Console.WriteLine("Dictionary value array " + RoleDefDictionary[key]);
+            //        }
+            //    }
+                
+            //    //values[i].CompareTo(InputDictionary.Keys);
+            //}
+             
+            // //string s = "a,b, b, c";
+            // //       string[] values = s.Split(',');
+            // //       for(int i = 0; i < values.Length; i++)
+            // //       {
+            // //          values[i] = values[i].Trim();
+            // //       }
+
+            
+
+            ////c1.UpdateName("Prashant");
+            ////Console.WriteLine(c1.Name);
+            //#endregion
+            Console.ReadLine();
+        }
+    }
+}
+
