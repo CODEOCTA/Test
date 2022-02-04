@@ -135,4 +135,236 @@ namespace CSharp_Practice
         }
     }
 }
+=============================================================================================================================================================
+<table border="1">
+            <thead>
+                <tr>
+                    <td>Internal/External</td>
+                    <td>Designation</td>
+                    <td>Needs,expectation or issues</td>
+                    <td>Environmental Issues</td>
+                    <td>Compliance Obligations</td>
+                    <td>address Key Issue</td>
+                    <td>Stratergic Action</td>
+                    <td>Proposed Year</td>
+                    <td>Date of Last Modification</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <!--<tr ng-repeat="item in RiskAssessmentDetail.RAInterestedPartyDetail">
+                    <td>{{item.InterestedPartyDetailId}}</td>
+                </tr>
+                <tr ng-if="RiskAssessmentDetail.RAInterestedPartyDetail.length == 0">
+                    <td>NO Record Available</td>
+                </tr>-->
+                <tr>
+                    <td>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+
+
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </td>
+                    <!--<td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="text" /> <button>+</button>
+                                    <input type="text" /> <button>+</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>-->
+                    <td>
+                        <input type="text" /> <button>+</button>
+                        <input type="text" /> <button>+</button>
+                    </td>
+                    <td>
+                        <input type="checkbox" /><br />
+                        <input type="checkbox" />
+                    </td>
+                    <td>
+                        <input type="checkbox" /><br />
+                        <input type="checkbox" />
+                    </td>
+                    <td>
+                        <button>+</button><br />
+                        <button>+</button><br />
+                        <button>+</button><br />
+                        <button>+</button><br />
+                    </td>
+                    <td>
+                        <input type="text" /> <button>+</button>
+                        <input type="text" /> <button>+</button>
+                    </td>
+                    <td>
+                        <input type="text" /> 
+                        <input type="text" /> 
+                    </td>
+                    <td>
+                        <input type="text" />
+                        <input type="text" />
+                    </td>
+                    <td>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="AddNewRA(addObj)">Add new Row</button>
+        
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+         $scope.RiskAssessmentDetail = {
+                            RiskAssessmentDetailId: 0,
+                            SiteLevelId: 0,
+                            BusinessLevelId: 0,
+                            DepotLevelId: 0,
+                            RevisionNo: 1,
+                            IsActive: true,
+                            RAInterestedPartyDetail=[]
+                        }
+                        $scope.RAInterestedPartyDetail = {
+                            InterestedPartyDetailId: 0,
+                            RiskAssessmentDetailId: 0,
+                            InterestedPartyType: 0,
+                            SiteLevelId: 0,
+                            BusinessLevelId: 0,
+                            DepotLevelId: 0,
+                            InterestedPartyTypeId: 0,
+                            ActionId: 0,
+                            IsActive: true,
+                            RAExpectationDetail=[]
+                        }
+                        $scope.addObj = {
+                            InterestedPartyDetailId: 0,
+                            RiskAssessmentDetailId: 0,
+                            InterestedPartyType: 0,
+                            SiteLevelId: 0,
+                            BusinessLevelId: 0,
+                            DepotLevelId: 0,
+                            InterestedPartyTypeId: 0,
+                            ActionId: 0,
+                            IsActive: true,
+                            RAExpectationDetail=[]
+                        }
+                        $scope.RAExpectationDetail = {
+                            ExpectationId: 0,
+                            InterestedPartyDetailId: 0,
+                            ExpectationDetail: "",
+                            IsEnvironmentalIssue: false,
+                            IsComplianceObligations: false,
+                            StratergicAction: "",
+                            ProposedYear: new date(),
+                            LastModificationDate: new date(),
+                            IsActive: true,
+                            RAHSEPortal=[]
+                        }
+                        $scope.RAHSEPortal = {
+                            HSEPortalId: 0,
+                            ExpectationId: 0,
+                            HSEPortal:"",                            
+                            IsActive: true,
+                            RAReviewerTeam=[]
+                        }
+                        $scope.RAReviewerTeam = {
+                            ReviewerTeamId: 0,
+                            RiskAssessmentDetailId: 0,
+                            EmployeeId: 0,
+                            IsActive: true
+                        }
+
+                        $scope.AddNewRA = function (addObj) {
+                            $scope.RiskAssessmentDetail.RAInterestedPartyDetail.push(addObj);
+                        }
+                        
+/////////////////////////////////////////////////////////////////////////////////////////////Mihir Sir Concept Logic
+function GetAllEmployees(listemployees)         //Display purpose
+{
+    $("#EmployeeContainer").html('');
+
+    var tblemployee = '<table cellpadding="1" cellspacing="1" style="border:solid thin black;margin:0px 0px;padding: 0px 0px;">'; //
+    tblemployee += '<thead>'
+                 + '   <tr>'
+                 + '<th style="border:solid thin black;width:10%"> FullName </th>'
+                 + '<th style="border:solid thin black;width:10%"> Gender </th>'
+                 + '<th style="border:solid thin black;width:10%"> Email </th>'
+                 + '<th style="border:solid thin black;width:10%"> ContactNo </th>'
+                 + '<th style="border:solid thin black;width:10%"> Salary </th>'
+                 + '<th style="border:solid thin black;width:10%"> Active </th>'
+                 + '<th style="border:solid thin black;width:10%"> Actions</th>'
+                 + '   </tr>'
+                 + '</thead>';      //
+    tblemployee += '<tbody>';       //
+    if (listemployees.length > 0) {
+        $(listemployees).each(function (i, val) {
+
+           // val.FullName = val.FirstName + ' ' + val.LastName;
+            tblemployee += '<tr>'
+              + '<td style="border:solid thin black; width:10%">' + val.FullName + '</td>'
+              + '<td style="border:solid thin black; width:10%">' + val.Gender + '</td>'
+              + '<td style="border:solid thin black; width:10%">' + val.Email + '</td>'
+              + '<td style="border:solid thin black; width:10%">' + val.ContactNo + '</td>'
+              + '<td style="border:solid thin black; width:10%">' + val.Salary + '</td>'
+              + '<td style="border:solid thin black; width:10%">' + '<input type="checkbox" id="checkActive2"  ' + val.EmployeeId +' '+ (val.Active ? 'checked':'') + ' disabled><label for="checkActive2"></label>' + '</td>'
+              + '<td style="border:solid thin black; width:10%">' 
+
+              +'<a href="javascript:void(0);" onclick="GetEmployeeID('+val.EmployeeId+');" class="input-group">Edit</a>'
+              + '<a href="javascript:void(0);" onclick="DeleteByID(' + val.EmployeeId + ');" class="input-group">Delete</a>'
+
+              + '</td>'
+              + '</tr>';        //
+
+        });
+    }
+    else                 // here is the problem may be...
+    {
+        tblemployee = '<tr><td colspan="7" style="align:center;vertical-align:middle;line-height:250px;">No employee record Found</td></tr> ';                         //
+    }
+
+    tblemployee += '</tbody>';  //
+    tblemployee += '</table>';  //
+
+    $("#EmployeeContainer").html(tblemployee);
+}
 
