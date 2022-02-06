@@ -1,0 +1,352 @@
+//this file is for factory,service and Provider tutorials
+
+/// <reference path="angular.min.js" />
+/// <reference path="Service1.js" />
+
+
+var myApp = angular
+    .module("myModule", ["myModule2"])
+    .controller("myController1", function ($scope, $filter, randomS, randomF, date) { // here randomS is service name and randomF is factory name and date is Provider name
+        // object for Add case 
+        $scope.actionToAdd = {
+            RiskAttachId: null,
+            RiskCategoryId: null,
+            RiskAttachDescription: '',
+            RiskId: null,
+            IsActive: true,
+        };
+
+        $scope.actionToAddRAExpectationDetail = {
+            ExpectationId: 0,
+            InterestedPartyDetailId: 0,
+            ExpectatioonDetail: "",
+            IsEnvironmentalIssue: true,
+            IsComplianceObligation: false,
+            StratagicAction: "",            
+            IsActive: true,
+
+        }
+
+        $scope.RiskCategoryAttach={
+            RiskAttachId: null,
+                RiskCategoryId: null,
+                    RiskAttachDescription: '',
+                        RiskId: null,
+                IsActive: true,
+                RAExpectationDetail :[]
+        }
+
+        // object for Edit case
+        $scope.actionToEdit = {
+            RiskAttachId: null,
+            RiskCategoryId: null,
+            RiskAttachDescription: '',
+            RiskId: null,
+            IsActive: true,
+        };
+
+        // RiskCategoryMaster model initialisation
+        $scope.RiskCategoryMaster = {
+            RiskCategoryId: 0,
+            RiskCategoryDescription: '',
+            IsActive: true,
+            RiskCategoryAttach: [],
+        };
+
+        var riskCategoryParams = {};
+
+        // options flag  for displaying showRiskAttachDetails
+        $scope.options =
+        {
+            showRiskAttachDetails: false,
+            showAdditionbtn: false
+        };
+
+        $scope.IsEdit = false;
+
+        // flag  for Save Or Update button Disable
+        $scope.IsSavebtnDisable = true;
+
+        $scope.RiskList = [
+            {
+                RiskId: 1,
+                RiskAttachDescription: "Risk1"
+            },
+            {
+                RiskId: 2,
+                RiskAttachDescription: "Risk2"
+            },
+            {
+                RiskId: 3,
+                RiskAttachDescription: "Risk3"
+            },
+            {
+                RiskId: 4,
+                RiskAttachDescription: "Risk4"
+            },
+        ];
+
+        // RiskCategory Configuration in Edit or Clear form case
+        $scope.resetRiskCategoryConfiguration = function () {
+            $scope.actionToAdd = {
+                RiskAttachId: null,
+                RiskCategoryId: null,
+                RiskAttachDescription: '',
+                RiskId: null,
+                IsActive: true,
+            };
+            $scope.options.showRiskAttachDetails = false;
+            $scope.options.showAdditionbtn= false
+        }
+
+        // For Clear form 
+        $scope.ClearFormData = function (frmRiskCategory) {
+            $scope.RiskCategoryMaster = {
+                RiskCategoryId: 0,
+                RiskCategoryDescription: '',
+                IsActive: true,
+                RiskCategoryAttach: [],
+            };
+            frmRiskCategory.$setPristine();
+            $scope.resetRiskCategoryConfiguration();
+        };
+
+
+
+        // Search Records
+        $scope.SearchRecords = function () {
+            $scope.isSearchClicked = true;
+            $scope.searchedString = '';
+            $scope.tableParams.data = [];
+            $scope.tableParams.page(1);
+            $scope.tableParams.reload();
+        };
+
+        // Disable Save Or Edit  button while Edit existing RiskAttach
+        var DisableSavebtnInEditMode = function (showHideAction) {
+            if (showHideAction.isEdit == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        // Edit Selected RiskAttach Detail in UI table
+        $scope.EditRiskAttachDetails = function (item, actionToEdit, showHideAction) {
+            item.isEdit = true;
+            showHideAction.isEdit = !showHideAction.isEdit;
+            angular.copy(item, actionToEdit);
+
+            // Disable Save Or Edit  button while Edit existing RiskAttach
+            DisableSavebtnInEditMode(showHideAction);
+        };
+
+        // Delete Selected RiskAttach Detail in UI table
+        $scope.DeleteRiskAttachDetails = function (item) {
+            $scope.RiskCategoryMaster.RiskCategoryAttach.splice($scope.RiskCategoryMaster.RiskCategoryAttach.indexOf(item), 1);
+        };
+
+        // Update RiskAttach Details data in UI table
+        $scope.UpdateRiskAttachDetails = function (frmRiskAttachEdit, item, actionToEdit, showHideAction) {
+            $scope.IsSave = true;
+            if ($scope.RiskCategoryMaster.RiskCategoryAttach.length > 0) {
+
+                var newRiskCategoryAttachDetails = [];
+                angular.forEach($scope.RiskCategoryMaster.RiskCategoryAttach, function (data) {
+                    if (item.$$hashKey != data.$$hashKey) {
+                        newRiskCategoryAttachDetails.push(data);
+                    }
+                });
+
+                // To stop user to enter duplicate Entry 
+                var isDuplicateExist = $filter("filter")(newRiskCategoryAttachDetails, { RiskId: actionToEdit.RiskId }, true).length;
+                if (isDuplicateExist > 0) {
+                    alert("RiskAttach already exists.");
+                    //toastr.warning("RiskAttach already exists.", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+
+                }
+            }
+
+            // show warining message when RiskAttach is blank
+            if (actionToEdit.RiskId == null || actionToEdit.RiskId == '') {
+                alert("Please Enter RiskAttach Description");
+                //toastr.warning("Please Enter RiskAttach Description", warningTitle);
+                $scope.IsSave = false;
+                return;
+            }
+
+            angular.copy(actionToEdit, item);
+            showHideAction.isEdit = !showHideAction.isEdit;
+            item.isEdit = false;
+
+            // Disable Save Or Update  button while Edit existing RiskAttach
+            DisableSavebtnInEditMode(showHideAction);
+        };
+
+        // Disable Save Or Update  button while Add new RiskAttach
+        var DisableSavebtnInAddMode = function (options) {
+            if (options.showRiskAttachDetails == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        // Add RiskAttach Detail in UI table
+        $scope.AddRiskAttachDetails = function (frmRiskAttachAdd, actionToAdd, options) {
+            $scope.IsSave = true;
+
+            // Disable Save Or Update  button while Add new RiskAttach
+            DisableSavebtnInAddMode(options);
+
+            if ((actionToAdd.RiskId != null || actionToAdd.RiskId != undefined)) {
+                if ($scope.RiskCategoryMaster.RiskCategoryAttach.length > 0) {
+                    var isDuplicateExist = $filter("filter")($scope.RiskCategoryMaster.RiskCategoryAttach, { RiskId: actionToAdd.RiskId }, true).length;
+                    if (isDuplicateExist > 0) {
+                        alert("RiskAttach already exists.");
+                        //toastr.warning("RiskAttach already exists.", warningTitle);
+                        $scope.IsSave = false;
+                        return;
+                    }
+                }
+
+                // show warining message when RiskAttachDescription is blank
+                if (actionToAdd.RiskId == null || actionToAdd.RiskId == '') {
+                    alert("Please Enter RiskAttach Description");
+                    //toastr.warning("Please Enter RiskAttach Description", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+
+                // reset frmRiskAttachAdd form after adding details successfully
+                if (frmRiskAttachAdd.$valid) {
+                    $scope.actionToAdd = {
+                        RiskAttachId: null,
+                        RiskCategoryId: null,
+                        RiskAttachDescription: '',
+                        RiskId: null,
+                        IsActive: true,
+                    };
+
+                    var RiskAttachDescription = $filter("filter")($scope.RiskList, { RiskId: actionToAdd.RiskId }, true);
+                    actionToAdd.RiskAttachDescription = RiskAttachDescription[0].RiskAttachDescription;
+
+                    $scope.RiskCategoryMaster.RiskCategoryAttach.push(actionToAdd);
+                    console.log($scope.RiskCategoryMaster.RiskCategoryAttach)
+                    options.showRiskAttachDetails = !options.showRiskAttachDetails;
+                }
+            }
+            else {
+                alert("Please select required fields");
+                //toastr.warning("Please select required fields", warningTitle);
+                $scope.IsSave = false;
+                return;
+            }
+
+            // Disable Save Or Update  button while Add new RiskAttach
+            DisableSavebtnInAddMode(options);
+        };
+
+        // Add RAExpectation Detail in UI table
+        $scope.AddExpactationsDetails = function (frmRiskCategoryAdd, actionToAddRAExpectationDetail, options) {
+            $scope.IsSave = true;
+
+            // Disable Save Or Update  button while Add new RiskCategory
+            DisableSavebtnInAddMode(options);
+
+            if ((actionToAddRAExpectationDetail.ExpectatioonDetail != null || actionToAddRAExpectationDetail.ExpectatioonDetail != undefined || actionToAddRAExpectationDetail.ExpectatioonDetail != "")) {
+                if ($scope.RiskCategoryAttach.RAExpectationDetail.length > 0) {
+                    var isDuplicateExist = $filter("filter")($scope.RiskCategoryAttach.RAExpectationDetail, { ExpectatioonDetail: actionToAddRAExpectationDetail.ExpectatioonDetail }, true).length;
+                    if (isDuplicateExist > 0) {
+                        alert("ExpectatioonDetail already exists.")
+                        //toastr.warning("ExpectatioonDetail already exists.", warningTitle);
+                        $scope.IsSave = false;
+                        return;
+                    }
+                }
+
+                // show warining message when RiskCategoryId is blank
+                if (actionToAddRAExpectationDetail.ExpectatioonDetail == null || actionToAddRAExpectationDetail.ExpectatioonDetail == "") {
+                    alert("Please Enter Expectatioon Detail")
+                    //toastr.warning("Please Enter Expectatioon Detail", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+
+                //actionToAddRAExpectationDetail.IsDisabled = true;
+
+                // reset frmRiskCategoryAdd form after adding details successfully
+                //if (actionToAddRAExpectationDetail.$valid) {
+                $scope.actionToAddRAExpectationDetail = {
+                        ExpectationId: 0,
+                        InterestedPartyDetailId: 0,
+                        ExpectatioonDetail: "",
+                        IsEnvironmentalIssue: true,
+                        IsComplianceObligation: false,
+                        StratagicAction: "",
+                        //ProposedYear: new date(),
+                        //LastModificationDate: new date(),
+                        IsActive: true,
+                    };
+
+                    //var RiskCategoryDescription = $filter("filter")($scope.riskCategory, { RiskCategoryId: actionToAddRAExpectationDetail.RiskCategoryId }, true);
+                    //$scope.actionToAdd.RiskCategoryDescription = RiskCategoryDescription[0].RiskCategoryDescription;
+                var RiskAttachDescription = $filter("filter")($scope.RiskList, { RiskId: $scope.actionToAdd.RiskId }, true);
+                $scope.actionToAdd.RiskAttachDescription = RiskAttachDescription[0].RiskAttachDescription;
+
+                $scope.RiskCategoryMaster.RiskCategoryAttach.push($scope.actionToAdd);
+                console.log($scope.RiskCategoryMaster.RiskCategoryAttach)
+
+                    $scope.RiskCategoryAttach.RAExpectationDetail.push(actionToAddRAExpectationDetail);
+                console.log($scope.RiskCategoryAttach.RAExpectationDetail)
+                $scope.RiskCategoryMaster.RiskCategoryAttach.push($scope.RiskCategoryAttach);
+                console.log($scope.RiskCategoryMaster)
+                    options.showRADetails = !options.showRADetails;
+                    options.showAdditionbtn = !options.showAdditionbtn;
+                //}
+            }
+            else {
+                toastr.warning("Please select required fields", warningTitle);
+                $scope.IsSave = false;
+                return;
+            }
+
+            // Disable Save Or Update  button while Add new RiskCategory
+            DisableSavebtnInAddMode(options);
+        };
+
+        // Cancel Risk Attach Details in UI table
+        $scope.CancelRiskAttachDetails = function (actionToAdd) {
+            $scope.actionToAdd = {
+                RiskAttachId: null,
+                RiskCategoryId: null,
+                RiskAttachDescription: '',
+                RiskId: null,
+                IsActive: true,
+            };
+
+            // Save Or Update button disable While click on Cancel button in frmRiskAttachAdd UI table
+            if ($scope.options.showRiskAttachDetails == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        };
+
+        // Save Or Update button disable While click on Cancel button in frmRiskAttachEdit UI table
+        $scope.CancelEdit = function () {
+            var isDuplicateExist = $filter("filter")($scope.RiskCategoryMaster.RiskCategoryAttach, { isEdit: true }, true).length;
+            if (isDuplicateExist > 1) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+    });
