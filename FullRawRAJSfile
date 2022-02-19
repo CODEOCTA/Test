@@ -1,0 +1,1277 @@
+(function () {
+    'use strict';
+
+    angular.module("SAFEApp").controller('ExpectationofInterestedPartyCtrl', [
+        '$scope', '$q', '$rootScope', '$ngBootbox', '$filter', 'CommonFunctions', 'CommonEnums','ngTableParams', 'CommonService', '$timeout', ExpectationofInterestedPartyCtrl
+    ]);
+
+    function ExpectationofInterestedPartyCtrl($scope, $q, $rootScope, $ngBootbox, $filter, CommonFunctions, CommonEnums, ngTableParams, CommonService, $timeout) {
+
+        // temp index variables 
+        $scope.expectationIndex = 0;
+        $scope.insterestedPartyIndex = 0;
+        $scope.tempCount = 0;
+        $scope.tempeditCount = 0;
+
+        $scope.changePropossedYrOnly = false;
+        $scope.cacleEditFlag = false;
+
+        // internal/external Types arrays
+        $scope.internal_OtherTypes = [];
+        $scope.externalTypes = [];
+
+        // set InternalExternalTypes Enums
+        $scope.enum.InternalExternalTypes = {
+            Internal_Other: 1,
+            External: 2,
+            Internal_RUBISDpt: 3,
+        }
+
+        // RiskAssessment Detail model
+        $scope.RiskAssessmentDetail = {
+            {
+            RiskAssessmentDetailId: 4017,
+                SiteLevelId: 4,
+                    BusinessLevelId: 82,
+                        DepotLevelId: 0,
+                            RevisionNo: 5,
+                                IsActive: true,
+                                    IsDraft: false,
+                                        RAReviewerTeam: [
+                                            {
+                                                ReviewerTeamId: 3031,
+                                                RiskAssessmentDetailId: 4017,
+                                                EmployeeId: 358,
+                                                EmployeeName: "Aime Patrick Habimana",
+                                                IsActive: true
+                                            },
+                                            {
+                                                ReviewerTeamId: 3032,
+                                                RiskAssessmentDetailId: 4017,
+                                                EmployeeId: 27,
+                                                EmployeeName: "Divyesh Mistry",
+                                                IsActive: true
+                                            },
+                                            {
+                                                ReviewerTeamId: 3033,
+                                                RiskAssessmentDetailId: 4017,
+                                                EmployeeId: 397,
+                                                EmployeeName: "Arakaza, Marlene Sereine",
+                                                IsActive: true
+                                            }
+                                        ],
+                                            RAInterestedPartyDetail: [
+                                                {
+                                                    InterestedPartyDetailId: 3044,
+                                                    RiskAssessmentDetailId: 4017,
+                                                    InterestedPartyType: 1,
+                                                    InterestedPartyTypeDescription: "Internal (Other)",
+                                                    SiteLevelId: 0,
+                                                    CountryDescription: "",
+                                                    BusinessLevelId: 0,
+                                                    BusinessDescription: "",
+                                                    DepotLevelId: 0,
+                                                    DepotDescription: "",
+                                                    InterestedPartyId: 3,
+                                                    DesignationDescription: "Govt Body",
+                                                    ActionId: 0,
+                                                    IsActive: true,
+                                                    RAExpectationDetail: [],
+                                                    actionToAddRAExpectationDetails: []
+                                                },
+                                                {
+                                                    InterestedPartyDetailId: 3051,
+                                                    RiskAssessmentDetailId: 4017,
+                                                    InterestedPartyType: 3,
+                                                    InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+                                                    SiteLevelId: 3,
+                                                    CountryDescription: "RWANDA",
+                                                    BusinessLevelId: 35,
+                                                    BusinessDescription: "B2B",
+                                                    DepotLevelId: 99,
+                                                    DepotDescription: "HO",
+                                                    InterestedPartyId: 0,
+                                                    DesignationDescription: "",
+                                                    ActionId: 0,
+                                                    IsActive: true,
+                                                    RAExpectationDetail: [],
+                                                    actionToAddRAExpectationDetails: []
+                                                },
+                                                {
+                                                    InterestedPartyDetailId: 3052,
+                                                    RiskAssessmentDetailId: 4017,
+                                                    InterestedPartyType: 2,
+                                                    InterestedPartyTypeDescription: "External",
+                                                    SiteLevelId: 0,
+                                                    CountryDescription: "",
+                                                    BusinessLevelId: 0,
+                                                    BusinessDescription: "",
+                                                    DepotLevelId: 0,
+                                                    DepotDescription: "",
+                                                    InterestedPartyId: 2,
+                                                    DesignationDescription: "Dealers",
+                                                    ActionId: 0,
+                                                    IsActive: true,
+                                                    RAExpectationDetail: [],
+                                                    actionToAddRAExpectationDetails: []
+                                                },
+                                                {
+                                                    InterestedPartyDetailId: 3053,
+                                                    RiskAssessmentDetailId: 4017,
+                                                    InterestedPartyType: 3,
+                                                    InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+                                                    SiteLevelId: 27,
+                                                    CountryDescription: "Burundi",
+                                                    BusinessLevelId: 59,
+                                                    BusinessDescription: "Fuel depots(FD)",
+                                                    DepotLevelId: 131,
+                                                    DepotDescription: "Bujumbura Depot",
+                                                    InterestedPartyId: 0,
+                                                    DesignationDescription: "",
+                                                    ActionId: 0,
+                                                    IsActive: true,
+                                                    RAExpectationDetail: [],
+                                                    actionToAddRAExpectationDetails: []
+                                                }
+                                            ]
+        }
+        }
+
+        // RAInterested Party Detail model
+        $scope.RAInterestedPartyDetail = {
+            InterestedPartyDetailId: 0,
+            RiskAssessmentDetailId: 0,
+            InterestedPartyType: 0,
+            SiteLevelId: 0,
+            BusinessLevelId: 0,
+            DepotLevelId: 0,
+            InterestedPartyId: 0,
+            ActionId: 0,
+            IsActive: true,
+            RAExpectationDetail: [],
+            saveRowSpan: 0
+        }
+
+        // RAExpectation Detail model
+        $scope.RAExpectationDetail = {
+            ExpectationId: 0,
+            InterestedPartyDetailId: 0,
+            ExpectationDetail: "",
+            IsEnvironmentalIssue: false,
+            IsComplianceObligation: false,
+            StratagicAction: "",
+            ProposedYear: null,//new Date().getFullYear(),
+            LastModificationDate: moment(new Date()).toDate(),
+            IsActive: true,
+            RAHSEPortal: []
+        }
+
+        //// RARevisionHistory Detail model
+        $scope.RARevisionHistory = [];
+        //$scope.RARevisionHistory = {
+        //    RevisionHistoryId: 0,
+        //    RiskAssessmentDetailId: 0,
+        //    SumissionDate: new Date(),
+        //    Reviewer: "",
+        //    Modification: "",
+        //}
+
+        // to set propossed year minDate(year)
+        var d = new Date();
+        $scope.minDate = (new Date()).setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
+
+        // to set propossed year
+        $scope.yearOptions = {
+            formatYear: 'yyyy',
+            startingDay: 1,
+            minMode: 'year'
+        };
+
+        // RAInterestedParty object for Add case
+        $scope.actionToAdd = {
+            InterestedPartyDetailId: 0,
+            RiskAssessmentDetailId: 0,
+            InterestedPartyType: 0,
+            SiteLevelId: 0,
+            BusinessLevelId: 0,
+            DepotLevelId: 0,
+            InterestedPartyId: 0,
+            ActionId: 0,
+            IsActive: true,
+            RAExpectationDetail: [],
+            actionToAddRAExpectationDetails: []
+        };
+
+        // RAInterestedParty object for Edit case
+        $scope.actionToEdit = {
+            InterestedPartyDetailId: 0,
+            RiskAssessmentDetailId: 0,
+            InterestedPartyType: 0,
+            SiteLevelId: 0,
+            BusinessLevelId: 0,
+            DepotLevelId: 0,
+            InterestedPartyId: 0,
+            ActionId: 0,
+            IsActive: true,
+            RAExpectationDetail: [],
+            actionToEditRAExpectationDetails: []
+        };
+
+        // RAExpectationDetail object for Add case
+        $scope.actionToAddRAExpectationDetail = {
+            ExpectationId: 0,
+            InterestedPartyDetailId: 0,
+            ExpectationDetail: "",
+            IsEnvironmentalIssue: false,
+            IsComplianceObligation: false,
+            StratagicAction: "",
+            ProposedYear: null,//moment(new Date()).toDate(),
+            LastModificationDate: moment(new Date()).toDate(),
+            IsActive: true,
+        }
+
+        // RAExpectationDetail object for Edit case
+        $scope.actionToEditRAExpectationDetails = {
+            ExpectationId: 0,
+            InterestedPartyDetailId: 0,
+            ExpectationDetail: "",
+            IsEnvironmentalIssue: false,
+            IsComplianceObligation: false,
+            StratagicAction: "",
+            ProposedYear: null,//moment(new Date()).toDate(),
+            LastModificationDate: moment(new Date()).toDate(),
+            IsActive: true,
+        }
+
+        $rootScope.permission.CanWrite = true;
+        $rootScope.permission.CanRead = true;
+        //var riskUniversParams = {};
+
+        // options flag  for displaying showRADetails
+        $scope.options =
+        {
+            showRADetails: false,
+            showAdditionbtn: false
+        };
+
+        // flag for edit
+        $scope.IsEdit = false;
+
+        // flag  for Save Or Update button Disable
+        $scope.IsSavebtnDisable = true;
+
+        // On Country change function call and sets functions(business) acording to country in main form business dropdown
+        $scope.countryChange = function () {
+
+            // only execute when RiskAssessmentDetail SiteLevelId is > 0
+            if ($scope.RiskAssessmentDetail.SiteLevelId > 0) {
+                $scope.functions = [];
+                $scope.locations = [];
+                var selected = $filter("filter")($scope.globalBusiness, { ParentId: $scope.RiskAssessmentDetail.SiteLevelId }, true);
+                angular.forEach(selected, function (item) {
+                    $scope.functions.push(item);
+                });
+            }
+        }
+
+        // on Busines change function call and sets locations(depots) acording to Busines in main form  depot dropdown 
+        $scope.businessChange = function () {
+
+            // only execute when RiskAssessmentDetail's SiteLevelId is > 0 and BusinessLevelId is > 0
+            if ($scope.RiskAssessmentDetail.SiteLevelId > 0 && $scope.RiskAssessmentDetail.BusinessLevelId > 0) {
+                $scope.locations = [];
+                var selected = $filter("filter")($scope.globalDepots, { ParentId: $scope.RiskAssessmentDetail.BusinessLevelId }, true);
+                angular.forEach(selected, function (item) {
+                    $scope.locations.push(item);
+                });
+            }
+        }
+
+        // On site change function call and sets gridFunctions(business) acording to country in grid business dropdown for add and edit modes
+        $scope.siteChange = function (isEditMode, isAddMode) {
+
+            // only execute when actionToAdd SiteLevelId is > 0
+            if (isAddMode && ($scope.actionToAdd.SiteLevelId > 0)) {
+                $scope.gridFunctions = [];
+                $scope.gridLocations = [];
+
+                var selectedFunctions = $filter("filter")($scope.globalFunctions, { ParentId: $scope.actionToAdd.SiteLevelId }, true);
+                angular.forEach(selectedFunctions, function (item) {
+                    $scope.gridFunctions.push(item);
+                });
+            }
+
+            // only execute when actionToEdit SiteLevelId is > 0
+            if (isEditMode && ($scope.actionToEdit.SiteLevelId > 0)) {
+                $scope.gridFunctions = [];
+                $scope.gridLocations = [];
+
+                var selectedFunctions = $filter("filter")($scope.globalFunctions, { ParentId: $scope.actionToEdit.SiteLevelId }, true);
+                angular.forEach(selectedFunctions, function (item) {
+                    $scope.gridFunctions.push(item);
+                });
+            }
+        }
+
+        // On business change function call and sets gridLocations(depots) acording to business in grid depots dropdown for add and edit modes
+        $scope.functionChange = function (isEditMode, isAddMode) {
+
+            // only execute when actionToAdd SiteLevelId is > 0 and BusinessLevelId is > 0
+            if (isAddMode && ($scope.actionToAdd.SiteLevelId > 0 && $scope.actionToAdd.BusinessLevelId > 0)) {
+                $scope.gridLocations = [];
+                var selectedLocations = $filter("filter")($scope.globalLocations, { ParentId: $scope.actionToAdd.BusinessLevelId }, true);
+                angular.forEach(selectedLocations, function (item) {
+                    $scope.gridLocations.push(item);
+                });
+            }
+
+            // only execute when actionToEdit SiteLevelId is > 0 and BusinessLevelId is > 0
+            if (isEditMode && ($scope.actionToEdit.SiteLevelId > 0 && $scope.actionToEdit.BusinessLevelId > 0)) {
+                $scope.gridLocations = [];
+                var selectedLocations = $filter("filter")($scope.globalLocations, { ParentId: $scope.actionToEdit.BusinessLevelId }, true);
+                angular.forEach(selectedLocations, function (item) {
+                    $scope.gridLocations.push(item);
+                });
+            }
+        }
+
+        $scope.InternalExternalChange = function (isEditMode, isAddMode) {
+
+            //edit case
+            if (isEditMode && $scope.actionToEdit.InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_RUBISDpt) {
+                $scope.actionToEdit.InterestedPartyId = 0;
+            }
+            else if (isEditMode && ($scope.actionToEdit.InterestedPartyType == CommonEnums.InternalExternalTypes.External || $scope.actionToEdit.InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_Other)) {
+                $scope.actionToEdit.DepotLevelId = 0;
+                $scope.actionToEdit.BusinessLevelId = 0;
+                $scope.actionToEdit.SiteLevelId = 0;
+            }
+
+            //add case
+            if (isAddMode && $scope.actionToAdd.InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_RUBISDpt) {
+                $scope.actionToAdd.InterestedPartyId = 0;
+            }
+            else if (isAddMode && ($scope.actionToAdd.InterestedPartyType == CommonEnums.InternalExternalTypes.External || $scope.actionToAdd.InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_Other)) {
+                $scope.actionToAdd.DepotLevelId = 0;
+                $scope.actionToAdd.BusinessLevelId = 0;
+                $scope.actionToAdd.SiteLevelId = 0;
+            }
+        }
+
+        
+
+        
+
+        // RiskAssessmentDetail Configuration in Edit or Clear form case
+        $scope.resetRiskAssessmentDetailConfiguration = function () {
+            $scope.actionToAdd = {
+                InterestedPartyDetailId: 0,
+                RiskAssessmentDetailId: 0,
+                InterestedPartyType: 0,
+                SiteLevelId: 0,
+                BusinessLevelId: 0,
+                DepotLevelId: 0,
+                InterestedPartyId: 0,
+                ActionId: 0,
+                IsActive: true,
+                IsDraft: true,
+                RAExpectationDetail: [],
+                actionToAddRAExpectationDetails: []
+            };
+            $scope.options.showRADetails = false;
+            $scope.options.showAdditionbtn = false
+        }
+
+        // For Clear form 
+        $scope.ClearFormData = function (frmRiskAssesment) {
+            $scope.RiskAssessmentDetail = {
+                RiskAssessmentDetailId: 0,
+                SiteLevelId: 0,
+                BusinessLevelId: 0,
+                DepotLevelId: 0,
+                RevisionNo: 1,
+                IsActive: true,
+                IsDraft: true,
+                RAInterestedPartyDetail: [],
+                RAReviewerTeam: []
+            }
+            $scope.RARevisionHistory = [];
+            frmRiskAssesment.$setPristine();
+            $("#ddlSite").focus();
+            CommonFunctions.ScrollToTop();
+            $scope.resetRiskAssessmentDetailConfiguration();
+        };
+
+        
+
+
+
+        // checks if-Object is Changed or not
+        function detectChange(riskAssessmentDetail) {
+
+            var j = 0;
+
+            for (var i = 0; i < riskAssessmentDetail.RAInterestedPartyDetail.length; i++) {
+                j = i;
+                for (j; j == i; j++) {
+
+                    //const one = riskAssessmentDetail.RAInterestedPartyDetail[j];
+                    //const two  = $scope.lastStorageAudit.RAInterestedPartyDetail[j];
+                    if (!!$scope.lastStorageAudit) {
+                        var isObjectChanged = !(_.isEqual(angular.toJson(riskAssessmentDetail.RAInterestedPartyDetail[j]), angular.toJson($scope.lastStorageAudit.RAInterestedPartyDetail[j])));
+                        //var isObjectChanged = JSON.stringify(one) === JSON.stringify(two);
+                        //var isObjectChanged = Object.entries(one).toString() === Object.entries(two).toString();
+
+                        if (isObjectChanged == true) {
+
+                            if (riskAssessmentDetail.RAInterestedPartyDetail[j].InterestedPartyDetailId > 0) {
+                                //existing updated
+                                riskAssessmentDetail.RAInterestedPartyDetail[j].ActionId = 1;
+                            }
+                            else if (riskAssessmentDetail.RAInterestedPartyDetail[j].InterestedPartyDetailId == 0) {
+                                //new added 
+                                riskAssessmentDetail.RAInterestedPartyDetail[j].ActionId = 4;
+                            }
+
+
+
+
+                            //console.log(isObjectChanged);
+                        }
+                    }
+                    else if ($scope.lastStorageAudit == undefined) {
+                        //new added 
+                        riskAssessmentDetail.RAInterestedPartyDetail[j].ActionId = 4;
+                    }
+
+                    //var isObjectChanged = _.isEqual(raData.RAInterestedPartyDetail, lastStoredData.RAInterestedPartyDetail); // true
+                    //if (isObjectChanged == true) {
+                    //    raData.RAInterestedPartyDetail[j].ActionId = 1;
+                    //}
+                    //for (let k = 0; k < raData.RAInterestedPartyDetail[j].RAExpectationDetail.length; k++) {
+                    //    var isDuplicateExist = $filter("filter")(riskAssessmentDetail.RAInterestedPartyDetail[j].RAExpectationDetail[k], { ProposedYear: lastStoredData.RAInterestedPartyDetail[j].RAExpectationDetail[k] }, true).length;
+                    //    if (!(isDuplicateExist > 0)) {
+                    //        raData.RAInterestedPartyDetail[j].ActionId = 1;
+                    //    }
+                    //}
+
+
+
+                }
+            }
+
+
+        }
+
+
+        
+
+
+        // Save as Draft Risk Assessment Detail in db
+        $scope.SaveAsDraft = function (riskAssessmentDetail, frmRiskAssesment) {
+
+            if (frmRiskAssesment.$valid) {
+                riskAssessmentDetail.IsDraft = false;
+                $scope.SaveRiskAssessmentDetail(riskAssessmentDetail, frmRiskAssesment);
+            }
+
+
+        }
+
+        ////Load Grid List        
+        //$scope.tableParams = new ngTableParams({
+        //    page: 1,
+        //    count: $rootScope.pageSize,
+        //    sorting: { RiskAssesmentTypeDescription: 'asc' }
+        //}, {
+        //    getData: function ($defer, params) {
+        //        if (riskUniversParams == null) {
+        //            riskUniversParams = {};
+        //        }
+
+        //        riskUniversParams = GetParams($scope.finalFilterCriteria);
+
+        //        riskUniversParams.Paging = CommonFunctions.GetPagingParams(params);
+        //        riskUniversParams.Paging.Search = $scope.isSearchClicked ? $scope.search : '';
+        //        $scope.searchedString = riskUniversParams.Paging.Search;
+
+
+        //        ExpectationofInterestedPartyService.GetAllRiskUniversConfiguration(riskUniversParams.Paging).then(function (response) {
+        //            if (response && response.data) {
+        //                var data = response.data;
+
+
+
+
+        //                if (data.MessageType == messageTypes.Success) {// Success
+        //                    $defer.resolve(data.Result);
+
+        //                    if (data.Result.length == 0) {
+        //                    } else {
+        //                        params.total(data.Result.TotalRecords);
+        //                    }
+        //                } else {
+        //                    showtoastr(data.Message, data.MessageType);
+        //                }
+        //            }
+        //            $rootScope.isAjaxLoadingChild = false;
+        //            CommonFunctions.SetFixHeader();
+        //        });
+        //    }
+        //}); 
+
+        // Disable Save Or Edit  button while Edit existing InterestedParty
+        var DisableSavebtnInEditMode = function (showHideAction) {// useless
+            if (showHideAction.isEdit == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        var isDuplicateExist;
+        // Edit Selected InsterestedParty Detail in UI table
+        $scope.EditInsterestedPartyDetails = function (item, actionToEdit, showHideAction) {
+            //$scope.cacleEditFlag = false;
+            //$scope.SetEditFlag();
+
+            $scope.changePropossedYrOnly = false;
+            item.isEdit = true;
+            $scope.tempeditCount = 0;
+            isDuplicateExist = $filter("filter")($scope.RiskAssessmentDetail.RAInterestedPartyDetail, { isEdit: true }, true).length;
+            if ((isDuplicateExist != null) && (isDuplicateExist > 1)) {
+                toastr.warning("At a time only one record is editable", warningTitle);
+                return;
+            }
+            else {
+
+                showHideAction.isEdit = !showHideAction.isEdit;
+                angular.copy(item, actionToEdit);
+
+                $scope.actionToEdit = actionToEdit;
+
+                // set ProposedYear during edit
+                if ($scope.actionToEdit.actionToAddRAExpectationDetails.length > 0) {
+                    angular.forEach($scope.actionToEdit.actionToAddRAExpectationDetails, function (data) {
+
+                        if (!!data.actionToAddRAHSEPortals) {
+
+                            $scope.tempeditCount = $scope.tempeditCount + data.actionToAddRAHSEPortals.length;
+                        }
+                        angular.forEach(data.actionToAddRAHSEPortals.length, function (data2) {
+
+                            if (data.ProposedYear != null) {
+                                data.ProposedYear = new Date(data.ProposedYear + "Z");
+                            }
+                        });
+
+                        if (data.ProposedYear != null) {
+                            data.ProposedYear = new Date(data.ProposedYear + "Z");
+                        }
+                    });
+                }
+
+                //$scope.RiskAssessmentDetail.RAInterestedPartyDetail.saveRowSpan = $scope.tempeditCount;
+                //console.log($scope.RiskAssessmentDetail.RAInterestedPartyDetail.saveRowSpan)
+                //console.log($scope.tempeditCount)
+
+                // set grid functions and grid locations dropdown according to actionToEdit model
+                $scope.siteChange(true, false);
+                $scope.functionChange(true, false);
+
+                // Disable Save Or Edit  button while Edit existing InterestedParty
+                DisableSavebtnInEditMode(showHideAction);
+                isDuplicateExist = null;
+            }
+        };
+
+        // Edit Edit Propossed Year of selected row only in UI table
+        $scope.EditPropossedYrOnly = function () {
+            $scope.changePropossedYrOnly = true;
+            $scope.SetEditFlag();
+        }
+
+        $scope.SetEditFlag = function () {
+            $scope.cacleEditFlag = false;
+        }
+
+        // Delete Selected InsterestedParty Detail in UI table
+        $scope.DeleteInsterestedPartyDetails = function (item) {
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail.indexOf(item), 1);
+
+            // reset isEdit flag (to keep at a time one functionality work)
+            angular.forEach($scope.RiskAssessmentDetail.RAInterestedPartyDetail, function (data) {
+                if (data.isEdit != undefined) {
+                    data.isEdit = false;
+                }
+            });
+        };
+
+        // Delete Selected RAExpectationDetail Detail in UI table
+        $scope.DeleteRAExpectationDetailDetails = function (item, insterestedPartyIndex) {
+            if ($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.length == 1) {
+                toastr.warning("Atleast One RAExpectationDetail required.", warningTitle);
+                return;
+            }
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.indexOf(item), 1);
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails.indexOf(item), 1);
+        };
+
+        // Delete Selected RAHSEPortal Detail in UI table
+        $scope.DeleteRAHSEPortalDetails = function (item, insterestedPartyIndex, expectationIndex) {
+            //console.log($scope.RiskAssessmentDetail)
+            if ($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.length == 1) {
+                toastr.warning("Atleast One RAHSEPortal required.", warningTitle);
+                return;
+            }
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.indexOf(item), 1);
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.indexOf(item), 1);
+            //console.log($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal)
+            //console.log($scope.RiskAssessmentDetail)
+
+        };
+
+        // Update InsterestedParty Details data in UI table
+        $scope.UpdateInsterestedPartyDetails = function (frmInsterestedPartyEdit, item, actionToEdit, showHideAction) {
+
+            isDuplicateExist = null;
+            item.isEdit = false;
+            actionToEdit.isEdit = false;
+
+            $scope.IsSave = true;
+            //if ($scope.RiskUniversMaster.RiskUniverseCategories.length > 0) {
+
+            //    var newRiskCategoryDetails = [];
+            //    angular.forEach($scope.RiskUniversMaster.RiskUniverseCategories, function (data) {
+            //        if (item.$$hashKey != data.$$hashKey) {
+            //            newRiskCategoryDetails.push(data);
+            //        }
+            //    });
+
+            //    // To stop user to enter duplicate Entry 
+            //    var isDuplicateExist = $filter("filter")(newRiskCategoryDetails, { RiskCategoryId: actionToEdit.RiskCategoryId }, true).length;
+            //    if (isDuplicateExist > 0) {
+            //        toastr.warning("RiskCategory already exists.", warningTitle);
+            //        $scope.IsSave = false;
+            //        return;
+
+            //    }
+            //}
+
+            //// show warining message when RiskCategory is blank
+            //if (actionToEdit.RiskCategoryId == null || actionToEdit.RiskCategoryId == '') {
+            //    toastr.warning("Please Enter RiskCategory Description", warningTitle);
+            //    $scope.IsSave = false;
+            //    return;
+            //}
+
+            // set InterestedPartyTypeDescription according to InterestedPartyType's id in actionToEdit model
+            var InterestedPartyTypeDescription = $filter("filter")($scope.internalExternalTypes, { InterestedPartyType: $scope.actionToEdit.InterestedPartyType }, true);
+            $scope.actionToEdit.InterestedPartyTypeDescription = InterestedPartyTypeDescription[0].Description;
+
+            // set CountryDescription,BusinessDescription,DepotDescription according to SiteLevelId,BusinessLevelId,DepotLevelId respectively in actionToEdit model
+            // only when InternalExternalTypes set as Internal_RUBISDpt
+            if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_RUBISDpt) {
+
+
+                if (!(actionToEdit.SiteLevelId > 0)) {
+                    toastr.warning("Please select  Country", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+                else if (!(actionToEdit.BusinessLevelId > 0)) {
+                    toastr.warning("Please select  Business", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+
+                // set CountryDescription in actionToEdit model
+                var Description = $filter("filter")($scope.sites, { LevelId: $scope.actionToEdit.SiteLevelId }, true);
+                $scope.actionToEdit.CountryDescription = Description[0].Name;
+
+                // set BusinessDescription in actionToEdit model
+                Description = $filter("filter")($scope.gridFunctions, { LevelId: $scope.actionToEdit.BusinessLevelId }, true);
+                $scope.actionToEdit.BusinessDescription = Description[0].Name;
+
+                if (actionToEdit.DepotLevelId > 0) {
+
+                    // set DepotDescription in actionToEdit model
+                    Description = $filter("filter")($scope.gridLocations, { LevelId: $scope.actionToEdit.DepotLevelId }, true);
+                    $scope.actionToEdit.DepotDescription = Description[0].Name;
+
+                    // set DepotDescription in item(RiskAssessmentDetail) model
+                    item.DepotDescription = $scope.actionToEdit.DepotDescription;
+                }
+
+                // set CountryDescription in item(RiskAssessmentDetail) model
+                item.CountryDescription = $scope.actionToEdit.CountryDescription;
+                // set BusinessDescription in item(RiskAssessmentDetail) model
+                item.BusinessDescription = $scope.actionToEdit.BusinessDescription;
+
+            }
+            // only when InternalExternalTypes set as External
+            // set DesignationDescription according to InterestedPartyId in actionToEdit model
+            else if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.External) {
+                var Description = $filter("filter")($scope.externalTypes, { InterestedPartyId: $scope.actionToEdit.InterestedPartyId }, true);
+
+                // set DesignationDescription in actionToEdit model
+                $scope.actionToEdit.DesignationDescription = Description[0].Description;
+
+                // set DesignationDescription in item(RiskAssessmentDetail) model
+                item.DesignationDescription = $scope.actionToEdit.DesignationDescription;
+            }
+            // only when InternalExternalTypes set as Internal_Other
+            // set DesignationDescription according to InterestedPartyId in actionToEdit model
+            else if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_Other) {
+                var Description = $filter("filter")($scope.internal_OtherTypes, { InterestedPartyId: $scope.actionToEdit.InterestedPartyId }, true);
+
+                // set DesignationDescription in actionToEdit model
+                $scope.actionToEdit.DesignationDescription = Description[0].Description;
+
+                // set DesignationDescription in item(RiskAssessmentDetail) model
+                item.DesignationDescription = $scope.actionToEdit.DesignationDescription;
+            }
+
+            // set item(RiskAssessmentDetail) model from actionToEdit model
+            angular.copy(actionToEdit, item);
+
+            // set item(RiskAssessmentDetail.RAExpectationDetail) model from actionToEdit.actionToAddRAExpectationDetails model
+            angular.copy(actionToEdit.actionToAddRAExpectationDetails, item.RAExpectationDetail);
+
+            // set each item(RiskAssessmentDetail.RAExpectationDetail.RAHSEPortal) model from actionToEdit.actionToAddRAExpectationDetails.actionToAddRAHSEPortals model
+            for (var j = 0; j < actionToEdit.actionToAddRAExpectationDetails.length; j++) {
+                item.RAExpectationDetail[j].RAHSEPortal = angular.copy(actionToEdit.actionToAddRAExpectationDetails[j].actionToAddRAHSEPortals);
+            }
+
+
+
+            item.saveRowSpan = $scope.tempeditCount;
+
+            // RiskAssessmentDetail.RAInterestedPartyDetail model by item model
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[$scope.RiskAssessmentDetail.RAInterestedPartyDetail.indexOf(item)] = angular.copy(item);
+
+            //$scope.RiskAssessmentDetail.RAInterestedPartyDetail.saveRowSpan = $scope.tempeditCount;
+
+
+            showHideAction.isEdit = !showHideAction.isEdit;
+            DisableSavebtnInEditMode(showHideAction);
+
+            //showHideAction.showAdditionbtn = !showHideAction.showAdditionbtn;
+            // Disable Save Or Update  button while Edit existing RiskCategory                                    
+        };
+
+        // Disable Save Or Update  button while Add new InterestedParty
+        var DisableSavebtnInAddMode = function (options) {
+            if (options.showRADetails == true) { //$scope.options.showAdditionbtn
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        // Add InterestedParty Detail in UI table
+        $scope.AddInsterestedPartyDetails = function (frmRAExpectationDetailAdd, actionToAdd, options) {
+            $scope.IsSave = true;
+
+            ///console.log(actionToAdd)
+            // set InterestedPartyTypeDescription according to InterestedPartyType's id in actionToAdd model
+            var InterestedPartyTypeDescription = $filter("filter")($scope.internalExternalTypes, { InterestedPartyType: $scope.actionToAdd.InterestedPartyType }, true);
+            $scope.actionToAdd.InterestedPartyTypeDescription = InterestedPartyTypeDescription[0].Description;
+
+            // set CountryDescription,BusinessDescription,DepotDescription according to SiteLevelId,BusinessLevelId,DepotLevelId respectively in actionToAdd model
+            // only when InternalExternalTypes set as Internal_RUBISDpt
+            if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_RUBISDpt) {
+
+                if (!(actionToAdd.SiteLevelId > 0)) {
+                    toastr.warning("Please select  Country", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+                else if (!(actionToAdd.BusinessLevelId > 0)) {
+                    toastr.warning("Please select  Business", warningTitle);
+                    $scope.IsSave = false;
+                    return;
+                }
+
+                // set CountryDescription in actionToAdd model
+                var Description = $filter("filter")($scope.sites, { LevelId: $scope.actionToAdd.SiteLevelId }, true);
+                $scope.actionToAdd.CountryDescription = Description[0].Name;
+
+                // set BusinessDescription in actionToAdd model
+                Description = $filter("filter")($scope.gridFunctions, { LevelId: $scope.actionToAdd.BusinessLevelId }, true);
+                $scope.actionToAdd.BusinessDescription = Description[0].Name;
+
+                if (actionToAdd.DepotLevelId > 0) {
+                    // set DepotDescription in actionToAdd model
+                    Description = $filter("filter")($scope.gridLocations, { LevelId: $scope.actionToAdd.DepotLevelId }, true);
+                    $scope.actionToAdd.DepotDescription = Description[0].Name;
+
+                    // set DepotDescription in RiskAssessmentDetail model
+                    $scope.RAInterestedPartyDetail.DepotDescription = $scope.actionToAdd.DepotDescription;
+                }
+
+                // set CountryDescription in RiskAssessmentDetail model
+                $scope.RAInterestedPartyDetail.CountryDescription = $scope.actionToAdd.CountryDescription;
+                // set BusinessDescription in RiskAssessmentDetail model
+                $scope.RAInterestedPartyDetail.BusinessDescription = $scope.actionToAdd.BusinessDescription;
+
+            }
+            // only when InternalExternalTypes set as External
+            // set DesignationDescription according to InterestedPartyId in actionToAdd model
+            else if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.External) {
+                var Description = $filter("filter")($scope.externalTypes, { InterestedPartyId: $scope.actionToAdd.InterestedPartyId }, true);
+
+                // set DesignationDescription in actionToAdd model
+                $scope.actionToAdd.DesignationDescription = Description[0].Description;
+
+                // set DesignationDescription in RAInterestedPartyDetail model
+                $scope.RAInterestedPartyDetail.DesignationDescription = $scope.actionToAdd.DesignationDescription;
+            }
+            // only when InternalExternalTypes set as Internal_Other
+            // set DesignationDescription according to InterestedPartyId in actionToAdd model
+            else if (InterestedPartyTypeDescription[0].InterestedPartyType == CommonEnums.InternalExternalTypes.Internal_Other) {
+                var Description = $filter("filter")($scope.internal_OtherTypes, { InterestedPartyId: $scope.actionToAdd.InterestedPartyId }, true);
+
+                // set DesignationDescription in actionToAdd model
+                $scope.actionToAdd.DesignationDescription = Description[0].Description;
+
+                // set DesignationDescription in RAInterestedPartyDetail model
+                $scope.RAInterestedPartyDetail.DesignationDescription = $scope.actionToAdd.DesignationDescription;
+            }
+
+            // temp insterestedPartyIndex 
+            var insterestedPartyIndex = $scope.RiskAssessmentDetail.RAInterestedPartyDetail.length;
+
+            // push current actionToAdd model into RiskAssessmentDetail.RAInterestedPartyDetail model
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail.push(actionToAdd)
+
+            // set ProposedYear during add
+            if (actionToAdd.actionToAddRAExpectationDetails.length > 0) {
+                angular.forEach(actionToAdd.actionToAddRAExpectationDetails, function (data) {
+                    if (data.ProposedYear != null) {
+                        data.ProposedYear = new Date(data.ProposedYear);
+                    }
+                });
+            }
+
+            // set RiskAssessmentDetail.RAInterestedPartyDetail.RAExpectationDetail model by actionToAdd.actionToAddRAExpectationDetails model
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail = angular.copy(actionToAdd.actionToAddRAExpectationDetails);
+
+            //set RiskAssessmentDetail.RAInterestedPartyDetail.RAExpectationDetail.RAHSEPortal model by actionToAdd.actionToAddRAExpectationDetails.actionToAddRAHSEPortals model
+            for (var j = 0; j < $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.length; j++) {
+                $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[j].RAHSEPortal = angular.copy(actionToAdd.actionToAddRAExpectationDetails[j].actionToAddRAHSEPortals);
+            }
+
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].saveRowSpan = $scope.tempCount;
+            //console.log($scope.RiskAssessmentDetail.RAInterestedPartyDetail.saveRowSpan)
+            //console.log($scope.tempCount)
+
+            //frmRAExpectationDetailAdd.$setPristine();
+            $scope.actionToAdd = {
+                InterestedPartyDetailId: 0,
+                RiskAssessmentDetailId: 0,
+                InterestedPartyType: 0,
+                SiteLevelId: 0,
+                BusinessLevelId: 0,
+                DepotLevelId: 0,
+                InterestedPartyId: 0,
+                ActionId: 0,
+                IsActive: true,
+                RAExpectationDetail: [],
+                actionToAddRAExpectationDetails: []
+            };
+
+            $scope.actionToAddRAExpectationDetail = {
+                ExpectationId: 0,
+                InterestedPartyDetailId: 0,
+                ExpectationDetail: "",
+                IsEnvironmentalIssue: false,
+                IsComplianceObligation: false,
+                StratagicAction: "",
+                ProposedYear: null,//moment(new Date()).toDate(),
+                LastModificationDate: moment(new Date()).toDate(),
+                IsActive: true,
+            }
+            options.showRADetails = !options.showRADetails;
+            options.showAdditionbtn = !options.showAdditionbtn;
+            // Disable Save Or Update  button while Add new InterestedParty
+            DisableSavebtnInAddMode(options);
+
+            //if ((actionToAdd.RiskCategoryId != null || actionToAdd.RiskCategoryId != undefined)) {
+            //    if ($scope.RiskUniversMaster.RiskUniverseCategories.length > 0) {
+            //        var isDuplicateExist = $filter("filter")($scope.RiskUniversMaster.RiskUniverseCategories, { RiskCategoryId: actionToAdd.RiskCategoryId }, true).length;
+            //        if (isDuplicateExist > 0) {
+            //            toastr.warning("RiskCategory already exists.", warningTitle);
+            //            $scope.IsSave = false;
+            //            return;
+            //        }
+            //    }
+
+            //    // show warining message when RiskCategoryId is blank
+            //    if (actionToAdd.RiskCategoryId == null || actionToAdd.RiskCategoryId == '') {
+            //        toastr.warning("Please Enter RiskCategory Description", warningTitle);
+            //        $scope.IsSave = false;
+            //        return;
+            //    }
+
+            //    actionToAdd.IsDisabled = true;
+
+            //    // reset frmInsterestedPartyAdd form after adding details successfully
+            //    if (frmInsterestedPartyAdd.$valid) {
+            //        $scope.actionToAdd = {
+            //            RiskCategoryId: null,
+            //            RiskCategoryDescription: '',
+            //            IsTRARequired: false,
+            //            IsBusinessRequired: false,
+            //            IsActive: true,
+            //            IsDisabled: false,
+            //        };
+
+            //        var RiskCategoryDescription = $filter("filter")($scope.riskCategory, { RiskCategoryId: actionToAdd.RiskCategoryId }, true);
+            //        actionToAdd.RiskCategoryDescription = RiskCategoryDescription[0].RiskCategoryDescription;
+
+
+            //        $scope.RiskUniversMaster.RiskUniverseCategories.push(actionToAdd);
+
+            //        options.showRADetails = !options.showRADetails;
+            //        options.showAdditionbtn = !options.showAdditionbtn;
+            //    }
+            //}
+            //else {
+            //    toastr.warning("Please select required fields", warningTitle);
+            //    $scope.IsSave = false;
+            //    return;
+            //}
+
+            // Disable Save Or Update  button while Add new InterestedParty
+            DisableSavebtnInAddMode(options);
+            //console.log(actionToAdd)
+        };
+
+        // add empty RAExpectation Objet into actionToAdd.actionToAddRAExpectationDetails OR actionToEdit.actionToAddRAExpectationDetails model
+        $scope.addRAExpectationObj = function (isEditMode, isAddMode) {
+
+            // only when isAddMode
+            if (isAddMode) {
+                $scope.actionToAdd.actionToAddRAExpectationDetails.push(
+                    {
+                        ProposedYear: null,//(new Date()).setFullYear(d.getFullYear(), d.getMonth(), d.getDate()),
+                        LastModificationDate: new Date(),
+                        IsActive: true,
+                        RAHSEPortal: [{}],
+                        actionToAddRAHSEPortals: [{ IsActive: true }],
+                        year: false
+                    })
+                $scope.tempCount++;
+            }
+
+
+
+            // only when isEditMode
+            else if (isEditMode) {
+                $scope.actionToEdit.actionToAddRAExpectationDetails.push(
+                    {
+                        ProposedYear: null,//(new Date()).setFullYear(d.getFullYear(), d.getMonth(), d.getDate()),
+                        LastModificationDate: new Date(),
+                        IsActive: true,
+                        RAHSEPortal: [{}],
+                        actionToAddRAHSEPortals: [{ IsActive: true }],
+                        year: false
+                    })
+                $scope.tempeditCount++;
+            }
+        }
+
+        // add empty RAHSEPortals Objet into actionToAdd.actionToAddRAExpectationDetailsactionToAddRAHSEPortals OR actionToEdit.actionToAddRAExpectationDetails.actionToAddRAHSEPortals model
+        $scope.addRAHSEPortalsObj = function (isEditMode, isAddMode, expectationIndex) {
+
+            // only when isAddMode
+            if (isAddMode) {
+                $scope.actionToAdd.actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.push({ IsActive: true })
+                $scope.tempCount++;
+            }
+            // only when isEditMode
+            else if (isEditMode) {
+                $scope.actionToEdit.actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.push({ IsActive: true })
+                //console.log($scope.actionToEdit)
+                $scope.tempeditCount++;
+            }
+        }
+
+        // Cancel Insterested Party Details in UI table
+        $scope.CancelInsterestedPartyDetails = function (actionToAdd) {
+            $scope.actionToAdd = {
+                InterestedPartyDetailId: 0,
+                RiskAssessmentDetailId: 0,
+                InterestedPartyType: 0,
+                SiteLevelId: 0,
+                BusinessLevelId: 0,
+                DepotLevelId: 0,
+                InterestedPartyId: 0,
+                ActionId: 0,
+                IsActive: true,
+                RAExpectationDetail: [],
+                actionToAddRAExpectationDetails: []
+            };
+
+            // Save Or Update button disable While click on Cancel button in frmInsterestedPartyAdd UI table
+            if ($scope.options.showRADetails == true) { //$scope.options.showAdditionbtn
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        };
+
+        // Save Or Update button disable While click on Cancel button in frmInsterestedPartyEdit UI table 
+        $scope.CancelEdit = function () { // useless
+            //var isDuplicateExist = $filter("filter")($scope.RiskAssessmentDetail.RAInterestedPartyDetail, { isEdit: true }, true).length;
+            //if (isDuplicateExist > 1) {
+            //    $scope.IsSavebtnDisable = true;
+            //}
+            //else {
+            //    $scope.IsSavebtnDisable = true;
+            //}
+            //showHideAction.isEdit = false;
+            $scope.cacleEditFlag = true;
+        }
+
+        // Init CALL
+        $scope.Init = function () {
+            $rootScope.isAjaxLoadingChild = true;
+            var all = [];
+            all.push(LoadData());
+        };
+
+        /*-------------------------------------------------------------------RAReviewerTeam----------------------------------------------------------------*/
+
+        // RAReviewerTeam model
+        $scope.RAReviewerTeam = {
+            ReviewerTeamId: 0,
+            RiskAssessmentDetailId: 0,
+            EmployeeId: 0,
+            EmployeeName: "",
+            IsActive: true
+        }
+
+        // actionToAddReviewerTeam object for Add case
+        $scope.actionToAddReviewerTeam = {
+            ReviewerTeamId: 0,
+            RiskAssessmentDetailId: 0,
+            EmployeeId: 0,
+            EmployeeName: "",
+            IsActive: true
+        };
+
+        // actionToEditReviewerTeam object for Edit case
+        $scope.actionToEditReviewerTeam = {
+            ReviewerTeamId: 0,
+            RiskAssessmentDetailId: 0,
+            EmployeeId: 0,
+            EmployeeName: "",
+            IsActive: true
+        };
+
+        // for autoComplete Search
+        $scope.employeeAutoCompleteUrl = EmployeeMasterService.EmployeeAutoCompleteUrl('', '', '1', '');
+
+        // Set Employees details for insert in UI tbl
+        $scope.SetEmployees = function (selected) {
+            if (angular.isDefined(selected)) {
+                var employee = selected.originalObject;
+
+                $scope.actionToAddReviewerTeam.EmployeeId = employee.EmployeeId;
+                $scope.actionToAddReviewerTeam.EmployeeName = employee.EmpName;
+            }
+        };
+
+        // Set Employees details for edit in UI tbl
+        $scope.SetEditEmployees = function (selected) {
+            if (angular.isDefined(selected)) {
+                var employee = selected.originalObject;
+
+                $scope.actionToEditReviewerTeam.EmployeeId = employee.EmployeeId;
+                $scope.actionToEditReviewerTeam.EmployeeName = employee.EmpName;
+            }
+        };
+
+        // options flag  for displaying showReviewerTeamDetails
+        $scope.options = {
+            showReviewerTeamDetails: false,
+        };
+
+        //flag for edit
+        $scope.IsEditReviewerTeam = false;
+
+        //// flag  for Save Or Update button Disable
+        //$scope.IsSavebtnDisable = true;
+
+        // ReviewerTeam Configuration in Edit or Clear form case
+        $scope.resetReviewerTeamConfiguration = function () {
+            $scope.actionToAddReviewerTeam = {
+                ReviewerTeamId: 0,
+                RiskAssessmentDetailId: 0,
+                EmployeeId: 0,
+                EmployeeName: "",
+                IsActive: true
+            };
+            $scope.options.showReviewerTeamDetails = false;
+        }
+
+        // Set focus of ReviewerTeam Description
+        $scope.setFocus = function () {
+            setTimeout(function () { $("input[name=txtReviewerDescription]").focus() }, 100);
+        };
+
+        // Disable Save Or Edit  button while Edit existing ReviewerTeam
+        var DisableReviewerTeamSavebtnInEditMode = function (showHideAction) { // showHideAction kadach change karvu padse
+            if (showHideAction.isEdit == true) {
+                $scope.IsSavebtnDisable = true; // aa function nu nai kam
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        // Edit Selected ReviewerTeam Detail in UI table
+        $scope.EditReviewerTeamDetails = function (item, actionToEditReviewerTeam, showHideAction) {
+
+            item.IsEditReviewerTeam = true;
+            showHideAction.isEdit = !showHideAction.isEdit;
+            angular.copy(item, actionToEditReviewerTeam);
+            DisableReviewerTeamSavebtnInEditMode(showHideAction);
+        };
+
+        // Delete Selected ReviewerTeam Detail in UI table
+        $scope.DeleteReviewerTeamDetails = function (item) {
+            $scope.RiskAssessmentDetail.RAReviewerTeam.splice($scope.RiskAssessmentDetail.RAReviewerTeam.indexOf(item), 1); // imp concept
+        };
+
+        // Update ReviewerTeam Details data in UI table
+        $scope.UpdateReviewerTeamDetails = function (frmReviewerTeamEdit, item, actionToEditReviewerTeam, showHideAction) {
+            $scope.IsReviewerTeamSave = true;
+            if ($scope.RiskAssessmentDetail.RAReviewerTeam.length > 0) {
+
+                var newReviewerTeamDetails = [];
+                angular.forEach($scope.RiskAssessmentDetail.RAReviewerTeam, function (data) {
+                    if (item.$$hashKey != data.$$hashKey) {
+                        newReviewerTeamDetails.push(data);
+                    }
+                });
+
+                // To stop user to enter duplicate Entry 
+                var isDuplicateExist = $filter("filter")(newReviewerTeamDetails, { EmployeeId: actionToEditReviewerTeam.EmployeeId }, true).length;
+                if (isDuplicateExist > 0) {
+                    toastr.warning("Employee already exists.", warningTitle);
+                    $scope.IsReviewerTeamSave = false;
+                    return;
+
+                }
+            }
+
+            // show warining message when ReviewerTeam is blank
+            if (actionToEditReviewerTeam.EmployeeId == null || actionToEditReviewerTeam.EmployeeId == '') {
+                toastr.warning("Please Enter Employee", warningTitle);
+                $scope.IsReviewerTeamSave = false;
+                return;
+            }
+
+            angular.copy(actionToEditReviewerTeam, item);
+            showHideAction.isEdit = !showHideAction.isEdit;
+            item.IsEditReviewerTeam = false;
+
+            // Disable Save Or Update  button while Edit existing ReviewerTeam
+            DisableReviewerTeamSavebtnInEditMode(showHideAction);
+        };
+
+        // Disable Save Or Update  button while Add new ReviewerTeam
+        var DisableReviewerTeamSavebtnInAddMode = function (options) {
+            if (options.showReviewerTeamDetails == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+
+        // Add ReviewerTeam Detail in UI table
+        $scope.AddReviewerTeamDetails = function (frmReviewerTeamAdd, actionToAddReviewerTeam, options) {
+            $scope.IsReviewerTeamSave = true;
+
+            // Disable Save Or Update  button while Add new ReviewerTeam
+            DisableReviewerTeamSavebtnInAddMode(options);
+
+            if ((actionToAddReviewerTeam.EmployeeId != null || actionToAddReviewerTeam.EmployeeId != undefined)) {
+                if ($scope.RiskAssessmentDetail.RAReviewerTeam.length > 0) {
+                    var isDuplicateExist = $filter("filter")($scope.RiskAssessmentDetail.RAReviewerTeam, { EmployeeId: actionToAddReviewerTeam.EmployeeId }, true).length;
+                    if (isDuplicateExist > 0) {
+                        toastr.warning("Employee already exists.", warningTitle);
+                        $scope.IsReviewerTeamSave = false;
+                        return;
+                    }
+                }
+
+                // show warining message when ReviewerTeamDescription is blank
+                if (actionToAddReviewerTeam.EmployeeId == null || actionToAddReviewerTeam.EmployeeId == '') {
+                    toastr.warning("Please Enter Employee", warningTitle);
+                    $scope.IsReviewerTeamSave = false;
+                    return;
+                }
+
+                // reset frmReviewerTeamAdd form after adding details successfully
+                if (frmReviewerTeamAdd.$valid) {
+                    $scope.actionToAddReviewerTeam = {
+                        ReviewerTeamId: 0,
+                        RiskAssessmentDetailId: 0,
+                        EmployeeId: 0,
+                        EmployeeName: "",
+                        IsActive: true
+                    };
+
+                    $scope.RiskAssessmentDetail.RAReviewerTeam.push(actionToAddReviewerTeam);
+                    options.showReviewerTeamDetails = !options.showReviewerTeamDetails;
+                }
+            }
+            else {
+                toastr.warning("Please select required fields", warningTitle);
+                $scope.IsReviewerTeamSave = false;
+                return;
+            }
+
+            // Disable Save Or Update  button while Add new ReviewerTeam
+            DisableReviewerTeamSavebtnInAddMode(options);
+        };
+
+        // Cancel Reviewer Team Details in UI table
+        $scope.CancelReviewerTeamDetails = function (actionToAddReviewerTeam) {
+            $scope.actionToAddReviewerTeam = {
+                ReviewerTeamId: 0,
+                RiskAssessmentDetailId: 0,
+                EmployeeId: 0,
+                EmployeeName: "",
+                IsActive: true
+            };
+
+            // Save Or Update button disable While click on Cancel button in frmReviewerTeamAdd UI table
+            if ($scope.options.showReviewerTeamDetails == true) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        };
+
+        // Save Or Update button disable While click on Cancel button in frmReviewerTeamEdit UI table
+        $scope.CancelReviewerTeamEdit = function () {
+            var isDuplicateExist = $filter("filter")($scope.RiskAssessmentDetail.RAReviewerTeam, { IsEditReviewerTeam: true }, true).length;
+            if (isDuplicateExist > 1) {
+                $scope.IsSavebtnDisable = true;
+            }
+            else {
+                $scope.IsSavebtnDisable = false;
+            }
+        }
+    }
+})();
