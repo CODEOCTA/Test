@@ -1,0 +1,888 @@
+function ExpectationofInterestedPartyCtrl($scope, $q) {
+        // set InternalExternalTypes Enums
+        $scope.InternalExternalTypes = {
+            Internal_Other: 1,
+            External: 2,
+            Internal_RUBISDpt: 3,
+        }
+
+
+        // temp index variables 
+        $scope.expectationIndex = 0;
+        $scope.insterestedPartyIndex = 0;
+
+
+        $scope.RiskAssessmentDetail = {
+            RiskAssessmentDetailId: 3007,
+            SiteLevelId: 4,
+            BusinessLevelId: 78,
+            DepotLevelId: 158,
+            RevisionNo: 10,
+            IsActive: true,
+            IsDraft: false,
+            RAReviewerTeam: [
+                {
+                    ReviewerTeamId: 2012,
+                    RiskAssessmentDetailId: 3007,
+                    EmployeeId: 170,
+                    EmployeeName: "dharmendra patel",
+                    IsActive: true,
+                    "$$hashKey": "object:259"
+                },
+                {
+                    ReviewerTeamId: 2013,
+                    RiskAssessmentDetailId: 3007,
+                    EmployeeId: 37,
+                    EmployeeName: "Divyesh Prajapati",
+                    IsActive: true,
+                    "$$hashKey": "object:260"
+                },
+                {
+                    ReviewerTeamId: 3008,
+                    RiskAssessmentDetailId: 3007,
+                    EmployeeId: 28,
+                    EmployeeName: "kunal prajapati",
+                    IsActive: true,
+                    "$$hashKey": "object:261"
+                }
+            ],
+            RAInterestedPartyDetail: [
+                {
+                    InterestedPartyDetailId: 2025,
+                    RiskAssessmentDetailId: 3007,
+                    InterestedPartyType: 1,
+                    InterestedPartyTypeDescription: "Internal (Other)",
+                    SiteLevelId: 0,
+                    CountryDescription: "",
+                    BusinessLevelId: 0,
+                    BusinessDescription: "",
+                    DepotLevelId: 0,
+                    DepotDescription: "",
+                    InterestedPartyId: 3,
+                    DesignationDescription: "Govt Body",
+                    ActionId: 0,
+                    IsActive: true,
+                    RAExpectationDetail: [
+                        {
+                            ProposedYear: "2037-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:13:43.069Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.1",
+                                    "$$hashKey": "object:667"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.2",
+                                    "$$hashKey": "object:668"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.2"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 1.1",
+                            StratagicAction: "record 1.1",
+                            "$$hashKey": "object:660"
+                        },
+                        {
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:13:43.830Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.1",
+                                    "$$hashKey": "object:699"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.2",
+                                    "$$hashKey": "object:700"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.3",
+                                    "$$hashKey": "object:701"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.3"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 1.2",
+                            StratagicAction: "record 1.2",
+                            "$$hashKey": "object:661"
+                        }
+                    ],
+                    actionToAddRAExpectationDetails: [
+                        {
+                            ProposedYear: "2037-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:13:43.069Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.1.2"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 1.1",
+                            StratagicAction: "record 1.1"
+                        },
+                        {
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:13:43.830Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 1.2.3"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 1.2",
+                            StratagicAction: "record 1.2"
+                        }
+                    ],
+                    isEdit: false,
+                    saveRowSpan: 5,
+                    "$$hashKey": "object:657"
+                },
+                {
+                    InterestedPartyDetailId: 2026,
+                    RiskAssessmentDetailId: 3007,
+                    InterestedPartyType: 3,
+                    InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+                    SiteLevelId: 3,
+                    CountryDescription: "RWANDA",
+                    BusinessLevelId: 44,
+                    BusinessDescription: "Fuel depots(FD)",
+                    DepotLevelId: 113,
+                    DepotDescription: "Kigali Fuel depot",
+                    InterestedPartyId: 0,
+                    DesignationDescription: "",
+                    ActionId: 0,
+                    IsActive: true,
+                    RAExpectationDetail: [
+                        {
+                            ProposedYear: "2037-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:14:37.901Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.1",
+                                    "$$hashKey": "object:1031"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.2",
+                                    "$$hashKey": "object:1032"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.3",
+                                    "$$hashKey": "object:1033"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.3"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 2.1",
+                            StratagicAction: "record 2.1",
+                            "$$hashKey": "object:1024"
+                        },
+                        {
+                            ProposedYear: "2025-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:14:47.485Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.2.1",
+                                    "$$hashKey": "object:1069"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.2.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 2.2",
+                            StratagicAction: "record 2.2",
+                            "$$hashKey": "object:1025"
+                        }
+                    ],
+                    actionToAddRAExpectationDetails: [
+                        {
+                            ProposedYear: "2037-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:14:37.901Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.1"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.1.3"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 2.1",
+                            StratagicAction: "record 2.1"
+                        },
+                        {
+                            ProposedYear: "2025-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:14:47.485Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 2.2.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 2.2",
+                            StratagicAction: "record 2.2"
+                        }
+                    ],
+                    isEdit: false,
+                    saveRowSpan: 4,
+                    "$$hashKey": "object:1021"
+                },
+                {
+                    InterestedPartyDetailId: 2027,
+                    RiskAssessmentDetailId: 3007,
+                    InterestedPartyType: 3,
+                    InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+                    SiteLevelId: 6,
+                    CountryDescription: "ETHIOPIA",
+                    BusinessLevelId: 40,
+                    BusinessDescription: "Retail",
+                    DepotLevelId: 105,
+                    DepotDescription: "HO",
+                    InterestedPartyId: 0,
+                    DesignationDescription: "",
+                    ActionId: 0,
+                    IsActive: true,
+                    RAExpectationDetail: [
+                        {
+                            ProposedYear: "2021-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:16:03.564Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 3.1.1",
+                                    "$$hashKey": "object:1421"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 3.1.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 3.1",
+                            StratagicAction: "record 3.1",
+                            "$$hashKey": "object:1417"
+                        }
+                    ],
+                    actionToAddRAExpectationDetails: [
+                        {
+                            ProposedYear: "2021-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:16:03.564Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 3.1.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 3.1",
+                            StratagicAction: "record 3.1"
+                        }
+                    ],
+                    isEdit: false,
+                    saveRowSpan: 1,
+                    "$$hashKey": "object:1414"
+                },
+                {
+                    InterestedPartyDetailId: 3016,
+                    RiskAssessmentDetailId: 3007,
+                    InterestedPartyType: 2,
+                    InterestedPartyTypeDescription: "External",
+                    SiteLevelId: 0,
+                    CountryDescription: "",
+                    BusinessLevelId: 0,
+                    BusinessDescription: "",
+                    DepotLevelId: 0,
+                    DepotDescription: "",
+                    InterestedPartyId: 2,
+                    DesignationDescription: "Dealers",
+                    ActionId: 0,
+                    IsActive: true,
+                    RAExpectationDetail: [
+                        {
+                            ExpectationId: 2011,
+                            InterestedPartyDetailId: 3016,
+                            ExpectationDetail: "record 4.1",
+                            IsEnvironmentalIssue: true,
+                            IsComplianceObligation: true,
+                            StratagicAction: "record 4.1",
+                            ProposedYear: "2032-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:34.233",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2011,
+                                    ExpectationId: 2011,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true,
+                                    "$$hashKey": "object:1745"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.2",
+                                    "$$hashKey": "object:1746"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.3",
+                                    "$$hashKey": "object:1747"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.4",
+                                    "$$hashKey": "object:1748"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2011,
+                                    ExpectationId: 2011,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.3"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.4"
+                                }
+                            ],
+                            "$$hashKey": "object:1735"
+                        },
+                        {
+                            ProposedYear: "2032-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:17:00.093Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.2.1",
+                                    "$$hashKey": "object:1785"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.2.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 4.2",
+                            StratagicAction: "record 4.2",
+                            "$$hashKey": "object:1736"
+                        },
+                        {
+                            ProposedYear: "2038-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:17:32.917Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.3.1",
+                                    "$$hashKey": "object:1802"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.3.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 4.3",
+                            StratagicAction: "record 4.3",
+                            "$$hashKey": "object:1737"
+                        }
+                    ],
+                    actionToAddRAExpectationDetails: [
+                        {
+                            ExpectationId: 2011,
+                            InterestedPartyDetailId: 3016,
+                            ExpectationDetail: "record 4.1",
+                            IsEnvironmentalIssue: true,
+                            IsComplianceObligation: true,
+                            StratagicAction: "record 4.1",
+                            ProposedYear: "2032-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:34.233",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2011,
+                                    ExpectationId: 2011,
+                                    HSEPortal: "Chnaged this row",
+                                    IsActive: true
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2011,
+                                    ExpectationId: 2011,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.2"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.3"
+                                },
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.1.4"
+                                }
+                            ]
+                        },
+                        {
+                            ProposedYear: "2032-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:17:00.093Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.2.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 4.2",
+                            StratagicAction: "record 4.2"
+                        },
+                        {
+                            ProposedYear: "2038-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-19T09:17:32.917Z",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {}
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    IsActive: true,
+                                    HSEPortal: "record 4.3.1"
+                                }
+                            ],
+                            year: false,
+                            ExpectationDetail: "record 4.3",
+                            StratagicAction: "record 4.3"
+                        }
+                    ],
+                    saveRowSpan: 6,
+                    isEdit: false,
+                    "$$hashKey": "object:1732"
+                },
+                {
+                    InterestedPartyDetailId: 3017,
+                    RiskAssessmentDetailId: 3007,
+                    InterestedPartyType: 3,
+                    InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+                    SiteLevelId: 168,
+                    CountryDescription: "Zimbabwe",
+                    BusinessLevelId: 169,
+                    BusinessDescription: "Bulawayo",
+                    DepotLevelId: 172,
+                    DepotDescription: "Belmont",
+                    InterestedPartyId: 0,
+                    DesignationDescription: "",
+                    ActionId: 0,
+                    IsActive: true,
+                    RAExpectationDetail: [
+                        {
+                            ExpectationId: 2012,
+                            InterestedPartyDetailId: 3017,
+                            ExpectationDetail: "record 4.1",
+                            IsEnvironmentalIssue: false,
+                            IsComplianceObligation: true,
+                            StratagicAction: "record 4.1",
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:35.233",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2012,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true,
+                                    "$$hashKey": "object:1916"
+                                },
+                                {
+                                    HSEPortalId: 2013,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.2",
+                                    IsActive: true,
+                                    "$$hashKey": "object:1917"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2012,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true
+                                },
+                                {
+                                    HSEPortalId: 2013,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.2",
+                                    IsActive: true
+                                }
+                            ],
+                            "$$hashKey": "object:1909"
+                        },
+                        {
+                            ExpectationId: 2013,
+                            InterestedPartyDetailId: 3017,
+                            ExpectationDetail: "record 4.2",
+                            IsEnvironmentalIssue: false,
+                            IsComplianceObligation: false,
+                            StratagicAction: "record 4.2",
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:35.297",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2014,
+                                    ExpectationId: 2013,
+                                    HSEPortal: "record 4.2.1",
+                                    IsActive: true,
+                                    "$$hashKey": "object:1950"
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2014,
+                                    ExpectationId: 2013,
+                                    HSEPortal: "record 4.2.1",
+                                    IsActive: true
+                                }
+                            ],
+                            "$$hashKey": "object:1910"
+                        }
+                    ],
+                    actionToAddRAExpectationDetails: [
+                        {
+                            ExpectationId: 2012,
+                            InterestedPartyDetailId: 3017,
+                            ExpectationDetail: "record 4.1",
+                            IsEnvironmentalIssue: false,
+                            IsComplianceObligation: true,
+                            StratagicAction: "record 4.1",
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:35.233",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2012,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "Chnaged this row2nd time",
+                                    IsActive: true
+                                },
+                                {
+                                    HSEPortalId: 2013,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "Chnaged this row2nd time",
+                                    IsActive: true
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2012,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.1",
+                                    IsActive: true
+                                },
+                                {
+                                    HSEPortalId: 2013,
+                                    ExpectationId: 2012,
+                                    HSEPortal: "record 4.1.2",
+                                    IsActive: true
+                                }
+                            ]
+                        },
+                        {
+                            ExpectationId: 2013,
+                            InterestedPartyDetailId: 3017,
+                            ExpectationDetail: "record 4.2",
+                            IsEnvironmentalIssue: false,
+                            IsComplianceObligation: false,
+                            StratagicAction: "record 4.2",
+                            ProposedYear: "2039-12-31T18:30:00.000Z",
+                            LastModificationDate: "2022-02-18T06:00:35.297",
+                            IsActive: true,
+                            RAHSEPortal: [
+                                {
+                                    HSEPortalId: 2014,
+                                    ExpectationId: 2013,
+                                    HSEPortal: "Chnaged this row2nd time",
+                                    IsActive: true
+                                }
+                            ],
+                            actionToAddRAHSEPortals: [
+                                {
+                                    HSEPortalId: 2014,
+                                    ExpectationId: 2013,
+                                    HSEPortal: "record 4.2.1",
+                                    IsActive: true
+                                }
+                            ]
+                        }
+                    ],
+                    saveRowSpan: 3,
+                    isEdit: false,
+                    "$$hashKey": "object:1906"
+                }
+            ]
+        }
+
+
+
+        // Delete Selected InsterestedParty Detail in UI table
+        $scope.DeleteInsterestedPartyDetails = function (item) {
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail.indexOf(item), 1);
+
+            // reset isEdit flag (to keep at a time one functionality work)
+            angular.forEach($scope.RiskAssessmentDetail.RAInterestedPartyDetail, function (data) {
+                if (data.isEdit != undefined) {
+                    data.isEdit = false;
+                }
+            });
+        };
+
+        // Delete Selected RAExpectationDetail Detail in UI table
+        $scope.DeleteRAExpectationDetailDetails = function (item, insterestedPartyIndex) {
+            if ($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.length == 1) {
+                toastr.warning("Atleast One RAExpectationDetail required.", warningTitle);
+                return;
+            }
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail.indexOf(item), 1);
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails.indexOf(item), 1);
+        };
+
+        // Delete Selected RAHSEPortal Detail in UI table
+        $scope.DeleteRAHSEPortalDetails = function (item, insterestedPartyIndex, expectationIndex) {
+            console.log($scope.RiskAssessmentDetail)
+            //if ($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.length == 1) {
+            //    toastr.warning("Atleast One RAHSEPortal required.", warningTitle);
+            //    return;
+            //}
+            var hseIndex = $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.indexOf(item);
+            console.log(insterestedPartyIndex)
+            console.log(expectationIndex)
+            console.log(hseIndex)
+            $scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal.indexOf(item), 1);
+            //$scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.splice($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].actionToAddRAExpectationDetails[expectationIndex].actionToAddRAHSEPortals.indexOf(item), 1);
+            //console.log($scope.RiskAssessmentDetail.RAInterestedPartyDetail[insterestedPartyIndex].RAExpectationDetail[expectationIndex].RAHSEPortal)
+            console.log($scope.RiskAssessmentDetail)
+
+        };
+
+        // RiskAssessment Detail model
+        //$scope.RiskAssessmentDetail = {
+       
+        //    RiskAssessmentDetailId: 4017,
+        //        SiteLevelId: 4,
+        //            BusinessLevelId: 82,
+        //                DepotLevelId: 0,
+        //                    RevisionNo: 5,
+        //                        IsActive: true,
+        //                            IsDraft: false,
+        //                                RAReviewerTeam: [
+        //                                    {
+        //                                        ReviewerTeamId: 3031,
+        //                                        RiskAssessmentDetailId: 4017,
+        //                                        EmployeeId: 358,
+        //                                        EmployeeName: "Aime Patrick Habimana",
+        //                                        IsActive: true
+        //                                    },
+        //                                    {
+        //                                        ReviewerTeamId: 3032,
+        //                                        RiskAssessmentDetailId: 4017,
+        //                                        EmployeeId: 27,
+        //                                        EmployeeName: "Divyesh Mistry",
+        //                                        IsActive: true
+        //                                    },
+        //                                    {
+        //                                        ReviewerTeamId: 3033,
+        //                                        RiskAssessmentDetailId: 4017,
+        //                                        EmployeeId: 397,
+        //                                        EmployeeName: "Arakaza, Marlene Sereine",
+        //                                        IsActive: true
+        //                                    }
+        //                                ],
+        //                                    RAInterestedPartyDetail: [
+        //                                        {
+        //                                            InterestedPartyDetailId: 3044,
+        //                                            RiskAssessmentDetailId: 4017,
+        //                                            InterestedPartyType: 1,
+        //                                            InterestedPartyTypeDescription: "Internal (Other)",
+        //                                            SiteLevelId: 0,
+        //                                            CountryDescription: "",
+        //                                            BusinessLevelId: 0,
+        //                                            BusinessDescription: "",
+        //                                            DepotLevelId: 0,
+        //                                            DepotDescription: "",
+        //                                            InterestedPartyId: 3,
+        //                                            DesignationDescription: "Govt Body",
+        //                                            ActionId: 0,
+        //                                            IsActive: true,
+        //                                            RAExpectationDetail: [],
+        //                                            actionToAddRAExpectationDetails: []
+        //                                        },
+        //                                        {
+        //                                            InterestedPartyDetailId: 3051,
+        //                                            RiskAssessmentDetailId: 4017,
+        //                                            InterestedPartyType: 3,
+        //                                            InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+        //                                            SiteLevelId: 3,
+        //                                            CountryDescription: "RWANDA",
+        //                                            BusinessLevelId: 35,
+        //                                            BusinessDescription: "B2B",
+        //                                            DepotLevelId: 99,
+        //                                            DepotDescription: "HO",
+        //                                            InterestedPartyId: 0,
+        //                                            DesignationDescription: "",
+        //                                            ActionId: 0,
+        //                                            IsActive: true,
+        //                                            RAExpectationDetail: [],
+        //                                            actionToAddRAExpectationDetails: []
+        //                                        },
+        //                                        {
+        //                                            InterestedPartyDetailId: 3052,
+        //                                            RiskAssessmentDetailId: 4017,
+        //                                            InterestedPartyType: 2,
+        //                                            InterestedPartyTypeDescription: "External",
+        //                                            SiteLevelId: 0,
+        //                                            CountryDescription: "",
+        //                                            BusinessLevelId: 0,
+        //                                            BusinessDescription: "",
+        //                                            DepotLevelId: 0,
+        //                                            DepotDescription: "",
+        //                                            InterestedPartyId: 2,
+        //                                            DesignationDescription: "Dealers",
+        //                                            ActionId: 0,
+        //                                            IsActive: true,
+        //                                            RAExpectationDetail: [],
+        //                                            actionToAddRAExpectationDetails: []
+        //                                        },
+        //                                        {
+        //                                            InterestedPartyDetailId: 3053,
+        //                                            RiskAssessmentDetailId: 4017,
+        //                                            InterestedPartyType: 3,
+        //                                            InterestedPartyTypeDescription: "Internal (RUBIS Dpt)",
+        //                                            SiteLevelId: 27,
+        //                                            CountryDescription: "Burundi",
+        //                                            BusinessLevelId: 59,
+        //                                            BusinessDescription: "Fuel depots(FD)",
+        //                                            DepotLevelId: 131,
+        //                                            DepotDescription: "Bujumbura Depot",
+        //                                            InterestedPartyId: 0,
+        //                                            DesignationDescription: "",
+        //                                            ActionId: 0,
+        //                                            IsActive: true,
+        //                                            RAExpectationDetail: [],
+        //                                            actionToAddRAExpectationDetails: []
+        //                                        }
+        //                                    ]
+        //}
+    }
