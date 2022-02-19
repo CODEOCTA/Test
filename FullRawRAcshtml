@@ -1,0 +1,1241 @@
+@{
+    ViewBag.Title = "ExpectationofInterestedParty";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .colSrno {
+        width: 20px !important;
+        min-width: 20px !important;
+        max-width: 20px !important;
+    }
+
+    .colGroupName {
+        width: 150px !important;
+        min-width: 150px !important;
+        max-width: 150px !important;
+    }
+
+    .colActive {
+        width: 25px !important;
+        min-width: 25px !important;
+        max-width: 25px !important;
+    }
+
+    .colAction {
+        width: 45px !important;
+        min-width: 45px !important;
+        max-width: 45px !important;
+    }
+
+    .colTraining {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+
+    .colExperience {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+</style>
+<div ng-controller="ExpectationofInterestedPartyCtrl" ng-init="Init()">
+    <form name="frmRiskAssesment" ng-submit="RiskAssessmentDetail.IsDraft = false;SaveRiskAssessmentDetail(RiskAssessmentDetail,frmRiskAssesment)"
+          novalidate>
+        <div class="main-page-title title-icon relative">
+            <!-- start page title-->
+            <h4 class="header-title-sub">
+                <i class="icofont-earth icon-position"></i>
+                ExpectationofInterestedParty
+            </h4>
+            <!-- end page title-->
+            <div class="clearfix">
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="card-box">
+
+
+            <!--BEGIN ExpectationofInterestedParty Grid-->
+            <div class="row m-t-5">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-control-static">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="colTraining">
+                                            Internal/External
+                                        </th>
+                                        <th class="colTraining">
+                                            Designation
+                                        </th>
+                                        <th class="colTraining">
+                                            NeedsExpactationsORIssues
+                                        </th>
+                                        <th class="colAction">
+                                            EnvironmentalIssues
+                                        </th>
+                                        <th class="colAction">
+                                            ComplianceObligations
+                                        </th>
+                                        <th class="colAction">
+                                            AddressKeyIssues
+                                        </th>
+                                        <th class="colAction">
+                                            StrategicAction
+                                        </th>
+                                        <th class="colAction">
+                                            ProposedYear
+                                        </th>
+                                        <th class="colAction">
+                                            DateOfModification
+                                        </th>
+                                        <th class="colAction">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-switch="showHideAction.isEdit" ng-repeat="item in RiskAssessmentDetail.RAInterestedPartyDetail"
+                                       ng-init="showHideAction={isEdit:false};actionToEdit={};insterestedPartyIndex = $index">
+
+
+                                    <tr ng-if="false" ng-repeat-start="ExpectatioonItem  in item.RAExpectationDetail"></tr>
+                                    <tr ng-switch-when="false" ng-repeat-end ng-repeat="RAHSEPortalItem in ExpectatioonItem.RAHSEPortal">
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">{{item.InterestedPartyTypeDescription}}</td>
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                                            <div ng-if="item.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>.Country </label> <br />
+                                                <span>{{item.CountryDescription}} </span> <br /> <br />
+                                                <label>.Business</label> <br />
+                                                <span>{{item.BusinessDescription}}</span> <br /> <br />
+                                                <label ng-if="item.DepotDescription.length >0">Depot</label> <br />
+                                                <span>{{item.DepotDescription}}</span>
+                                            </div>
+                                            <div ng-if="item.InterestedPartyType==enum.InternalExternalTypes.External || item.InterestedPartyType==enum.InternalExternalTypes.Internal_Other">
+                                                <span>{{item.DesignationDescription}}</span>
+                                            </div>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">
+                                            {{ExpectatioonItem.ExpectationDetail}}
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAExpectationDetailDetails(ExpectatioonItem,insterestedPartyIndex);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsEnvironmentalIssue" ng-disabled="true" class="form-group" /></td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsComplianceObligation" ng-disabled="true" class="form-group" /></td>
+                                        <td>
+                                            {{RAHSEPortalItem.HSEPortal}}
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAHSEPortalDetails(RAHSEPortalItem,insterestedPartyIndex,expectationIndex);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.StratagicAction}}</td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.ProposedYear | date  : "yyyy"}}</td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.LastModificationDate | toDateString :'UtcTolocalDate'}}</td>
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                                            <button type="button" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title=".Edit" ng-click="SetEditFlag();EditInsterestedPartyDetails(item, actionToEdit, showHideAction);">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" ng-if="item.RAExpectationDetail.length>0" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title="(EditProposedYearOnly)" ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);EditPropossedYrOnly();">
+                                                <i class="fa fa-calendar-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteInsterestedPartyDetails(item);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr ng-switch-when="false" ng-if="item.RAExpectationDetail.length==0">
+                                        <td class="colTrainingTitle">
+                                            {{item.InterestedPartyTypeDescription}}
+                                        </td>
+                                        <td class="colTrainingTitle">
+                                            <div ng-if="item.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>.Country </label> <br />
+                                                <span>{{item.CountryDescription}} </span> <br /> <br />
+                                                <label>.Business</label> <br />
+                                                <span>{{item.BusinessDescription}}</span> <br /> <br />
+                                                <label ng-if="item.DepotDescription.length >0">.Depot</label> <br />
+                                                <span>{{item.DepotDescription}}</span>
+                                            </div>
+                                            <div ng-if="item.InterestedPartyType==enum.InternalExternalTypes.External || item.InterestedPartyType==enum.InternalExternalTypes.Internal_Other">
+                                                <span>{{item.DesignationDescription}}</span>
+                                            </div>
+                                        </td>
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="ExpectatioonItem in item.RAExpectationDetail">
+                                                    <td>
+                                                        {{ExpectatioonItem.ExpectationDetail}}
+                                                        <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title=".Delete"
+                                                                ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAExpectationDetailDetails(ExpectatioonItem,insterestedPartyIndex);">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--Begin EnvironmentalIssues-->
+                                        <td class="colTrainingTitle">
+                                            <table ng-repeat="ExpectatioonItem  in item.RAExpectationDetail" class="colTrainingTitle">
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" ng-model="ExpectatioonItem.IsEnvironmentalIssue" ng-disabled="true" class="form-group" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End EnvironmentalIssues-->
+                                        <!--Begin ComplianceObligations-->
+                                        <td class="colTrainingTitle">
+                                            <table ng-repeat="ExpectatioonItem  in item.RAExpectationDetail" class="colTrainingTitle">
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" ng-model="ExpectatioonItem.IsComplianceObligation" ng-disabled="true" class="form-group" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End ComplianceObligations-->
+                                        <!--Begin AddressKeyIssues-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tbody ng-repeat="ExpectatioonItem in item.RAExpectationDetail" class="colTrainingTitle">
+                                                    <tr ng-hide="true" ng-init="expectationIndex = $index"></tr>
+                                                    <tr ng-repeat="RAHSEPortalItem in ExpectatioonItem.RAHSEPortal">
+                                                        <td>
+                                                            {{RAHSEPortalItem.HSEPortal}}
+                                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light pull-right m-r-5 delete-btn" title=".Delete"
+                                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAHSEPortalDetails(RAHSEPortalItem,insterestedPartyIndex,expectationIndex);">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <!--End AddressKeyIssues-->
+                                        <!--Begin StrategicAction-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="ExpectatioonItem  in item.RAExpectationDetail" class="colTrainingTitle">
+                                                    <td>
+                                                        {{ExpectatioonItem.StratagicAction}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End StrategicAction-->
+                                        <!--Begin ProposedYear-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="ExpectatioonItem  in item.RAExpectationDetail" class="colTrainingTitle">
+                                                    <td>
+                                                        {{ExpectatioonItem.ProposedYear | date  : "yyyy"}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End ProposedYear-->
+                                        <!--Begin DateOfModification-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="ExpectatioonItem  in item.RAExpectationDetail" class="colTrainingTitle">
+                                                    <td>
+                                                        {{ExpectatioonItem.LastModificationDate | toDateString :'UtcTolocalDate'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="colAction">
+                                            <button type="button" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title=".Edit" ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" ng-if="item.RAExpectationDetail.length>0" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title="Resource.Edit,Resource.ProposedYear,Resource.Only" ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);EditPropossedYrOnly();">
+                                                <i class="fa fa-calendar-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteInsterestedPartyDetails(item);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr ng-if="false" ng-repeat-start="actionToAddRAExpectationDetail in  actionToEdit.actionToAddRAExpectationDetails"></tr>
+                                    <tr ng-form="frmInsterestedPartyEdit" @*ng-if="cacleEditFlag==false"*@ ng-repeat-end @*ng-if="actionToEdit.actionToAddRAExpectationDetails.length >0"*@ ng-repeat="actionToAddRAHSEPortal in  actionToAddRAExpectationDetail.actionToAddRAHSEPortals">
+                                        <td rowspan="{{tempeditCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <label></label>
+                                            <select name="ddlInternalExternal" id="ddlInternalExternal" class="form-control" tabindex="9" ng-change="InternalExternalChange(true,false)"
+                                                    ng-model="actionToEdit.InterestedPartyType" ng-focus="true" ng-selected="actionToEdit.InterestedPartyType == e.Id"
+                                                    ng-options="e.Id as e.Description for e in internalExternalTypes" ng-disabled="changePropossedYrOnly"
+                                            </select>
+
+                                        </td>
+                                        <td rowspan="{{tempeditCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <!--Begin Designation if Internal (RUBIS Dpt)-->
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Country<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlCountry" id="ddlCountry" class="form-control" ng-required="true" tabindex="10"
+                                                        ng-model="actionToEdit.SiteLevelId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.SiteLevelId == e.LevelId" ng-change="siteChange(true,false)"
+                                                        ng-options="e.LevelId as e.Name for e in sites">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyEdit.ddlCountry.$invalid && frmInsterestedPartyEdit.ddlCountry.$dirty">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Business<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlBusiness" id="ddlBusiness" class="form-control" ng-required="true" tabindex="11"
+                                                        ng-model="actionToEdit.BusinessLevelId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.BusinessLevelId == e.LevelId" ng-change="functionChange(true,false)"
+                                                        ng-options="e.LevelId as e.Name for e in gridFunctions">
+                                                    <option value=""></option>
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyEdit.ddlBusiness.$invalid && frmInsterestedPartyEdit.ddlBusiness.$dirty">
+                                                    <span data-ng-show="frmInsterestedPartyEdit.ddlBusiness.$error">.Select.Business</span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Depot
+                                                </label>
+                                                <select name="ddlDepot" id="ddlDepot" class="form-control" tabindex="12"
+                                                        ng-model="actionToEdit.DepotLevelId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.DepotLevelId == e.LevelId"
+                                                        ng-options="e.LevelId as e.Name for e in gridLocations">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <!--End Designation if Internal (RUBIS Dpt)-->
+                                            <!--Begin Designation if Internal/External-->
+                                            <label></label>
+                                            <select ng-if="actionToEdit.InterestedPartyType == enum.InternalExternalTypes.External" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="13"
+                                                    ng-model="actionToEdit.InterestedPartyId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in externalTypes">
+                                            </select>
+                                            <select ng-if="actionToEdit.InterestedPartyType == enum.InternalExternalTypes.Internal_Other" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="14"
+                                                    ng-model="actionToEdit.InterestedPartyId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in internal_OtherTypes">
+                                            </select>
+                                            <!--End Designation if Internal/External-->
+
+
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <input class="form-control" type="text" ng-disabled="changePropossedYrOnly" maxlength="1000" ng-model="actionToAddRAExpectationDetail.ExpectationDetail" placeholder="Enter NeedsExpactationsORIssues" />
+                                            <button type="button" ng-hide="changePropossedYrOnly" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-click="addRAExpectationObj(true,false)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+
+                                            <input type="checkbox" ng-disabled="changePropossedYrOnly" ng-model="actionToAddRAExpectationDetail.IsEnvironmentalIssue" class="form-group" />
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+
+                                            <input type="checkbox" ng-disabled="changePropossedYrOnly" ng-model="actionToAddRAExpectationDetail.IsComplianceObligation" class="form-group" />
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" ng-disabled="changePropossedYrOnly" type="text" maxlength="1000" ng-model="actionToAddRAHSEPortal.HSEPortal" />
+                                            <button ng-init="expectationIndex = $parent.$index" ng-hide="changePropossedYrOnly" type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-click="addRAHSEPortalsObj(true,false,expectationIndex)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <input class="form-control" type="text" ng-disabled="changePropossedYrOnly" maxlength="1000" ng-model="actionToAddRAExpectationDetail.StratagicAction" placeholder="Enter StrategicAction" />
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <div class="form-group">
+                                                <label>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" name="txtYear{{$index}}" id="txtYear{{$index}}" class="form-control" uib-datepicker-popup="{{YearFormat}}"
+                                                           ng-model="actionToAddRAExpectationDetail.ProposedYear" is-open="actionToAddRAExpectationDetail.year" min-date="minDate"
+                                                           datepicker-options="yearOptions"
+                                                           close-text="Close" alt-input-formats="'yyyy'" tabindex="15" readonly="readonly" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="selectByn{{$index}}" id="selectByn{{$index}}" class="btn btn-icon waves-effect btn-default" ng-click="actionToAddRAExpectationDetail.year=true"
+                                                                tabindex="16">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            {{actionToAddRAExpectationDetail.LastModificationDate | toDateString :'UtcTolocalDate'}}
+                                        </td>
+                                        <td class="colAction" rowspan="{{tempeditCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <button type="button" class="btn btn-icon btn-success btn-xs waves-effect waves-light m-r-5" title=".Add"
+                                                    ng-disabled="frmInsterestedPartyEdit.$invalid"
+                                                    ng-click="UpdateInsterestedPartyDetails(frmInsterestedPartyEdit, item, actionToEdit, options);">
+                                                <i class="fa fa-save"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Cancel" ng-click="CancelEdit();showHideAction.isEdit=!showHideAction.isEdit;item.isEdit = false;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <tr ng-form="frmInsterestedPartyEdit" @*ng-if="false"*@ ng-if="actionToEdit.actionToAddRAExpectationDetails.length ==0" ng-switch-when="true">
+                                        <!--Begin Internal/External-->
+                                        <td>
+                                            <label></label>
+                                            <select name="ddlInternalExternal{{$index}}" ng-disabled="changePropossedYrOnly" id="ddlInternalExternal{{$index}}" class="form-control" tabindex="2"
+                                                    ng-model="actionToEdit.InterestedPartyType" ng-focus="true" ng-selected="actionToEdit.InterestedPartyType == e.Id" ng-change="InternalExternalChange(true,false)"
+                                                    ng-options="e.Id as e.Description for e in internalExternalTypes">
+                                                <option value="">Select Internal/ExternalType</option>
+                                            </select>
+
+                                        </td>
+                                        <!--End Internal/External-->
+                                        <!--Begin Designation-->
+                                        <td class="colTrainingTitle">
+                                            <!--Begin Designation if Internal (RUBIS Dpt)-->
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Country<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlCountry" id="ddlCountry" ng-disabled="changePropossedYrOnly" class="form-control" ng-required="true" tabindex="2"
+                                                        ng-model="actionToEdit.SiteLevelId" ng-focus="true" ng-selected="actionToEdit.SiteLevelId == e.LevelId" ng-change="siteChange(true,false)"
+                                                        ng-options="e.LevelId as e.Name for e in sites">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyEdit.ddlCountry.$invalid && frmInsterestedPartyEdit.ddlCountry.$dirty">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType == enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Business<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlBusiness" id="ddlBusiness" ng-disabled="changePropossedYrOnly" class="form-control" ng-required="true" tabindex="2"
+                                                        ng-model="actionToEdit.BusinessLevelId" ng-focus="true" ng-selected="actionToEdit.BusinessLevelId == e.LevelId" ng-change="functionChange(true,false)"
+                                                        ng-options="e.LevelId as e.Name for e in gridFunctions">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyEdit.ddlBusiness.$invalid && frmInsterestedPartyEdit.ddlBusiness.$dirty">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group" ng-if="actionToEdit.InterestedPartyType == enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Depot
+                                                </label>
+                                                <select name="ddlDepot" id="ddlDepot" ng-disabled="changePropossedYrOnly" class="form-control" tabindex="2"
+                                                        ng-model="actionToEdit.DepotLevelId" ng-focus="true"
+                                                        ng-options="e.LevelId as e.Name for e in gridLocations">
+                                                </select>
+
+                                            </div>
+                                            <!--End Designation if Internal (RUBIS Dpt)-->
+                                            <!--Begin Designation if Internal/External-->
+                                            <select ng-if="actionToEdit.InterestedPartyType ==enum.InternalExternalTypes.External" name="ddlInterestedParties{{$index}}" id="ddlInterestedParties{{$index}}" class="form-control" tabindex="2"
+                                                    ng-model="actionToEdit.InterestedPartyId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in externalTypes">
+                                            </select>
+                                            <select ng-if="actionToEdit.InterestedPartyType ==enum.InternalExternalTypes.Internal_Other" name="ddlInterestedParties{{$index}}" id="ddlInterestedParties{{$index}}" class="form-control" tabindex="2"
+                                                    ng-model="actionToEdit.InterestedPartyId" ng-disabled="changePropossedYrOnly" ng-focus="true" ng-selected="actionToEdit.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in internal_OtherTypes">
+                                            </select>
+                                            <!--End Designation if Internal/External-->
+                                        </td>
+                                        <!--End Designation-->
+                                        <!--Begin NeedsExpactationsORIssues-->
+                                        <td>
+                                            <table>
+                                                <tr ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                    <td>
+                                                        <input class="form-control" ng-disabled="changePropossedYrOnly" type="text" maxlength="1000" ng-model="actionToEditRAExpectationDetail.ExpectationDetail" placeholder="Resource.Enter, Resource.NeedsExpactationsORIssues)" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <button type="button" ng-hide="changePropossedYrOnly" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-disabled="frmInsterestedPartyAdd.$invalid"
+                                                    ng-click="addRAExpectationObj(true,false)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <!--End NeedsExpactationsORIssues-->
+                                        <!--Begin EnvironmentalIssues-->
+                                        <td class="colTrainingTitle">
+                                            <table ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" ng-disabled="changePropossedYrOnly" ng-model="actionToEditRAExpectationDetail.IsEnvironmentalIssue" class="form-group" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End EnvironmentalIssues-->
+                                        <!--Begin ComplianceObligations-->
+                                        <td class="colTrainingTitle">
+                                            <table ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" ng-disabled="changePropossedYrOnly" ng-model="actionToEditRAExpectationDetail.IsComplianceObligation" class="form-group" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End ComplianceObligations-->
+                                        <!--Begin AddressKeyIssues-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tbody ng-repeat="actionToAddRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                    <tr ng-hide="true" ng-init="expectationIndex = $index"></tr>
+                                                    <tr ng-repeat="actionToEditRAHSEPortal in actionToAddRAExpectationDetail.actionToAddRAHSEPortals">
+                                                        <td>
+                                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToEditRAHSEPortal.HSEPortal" />
+                                                            <button type="button" ng-hide="changePropossedYrOnly" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                                    ng-click="addRAHSEPortalsObj(true,false,expectationIndex)">
+                                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <!--End AddressKeyIssues-->
+                                        <!--Begin StrategicAction-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                    <td>
+                                                        <input class="form-control" type="text" ng-disabled="changePropossedYrOnly" maxlength="1000" ng-model="actionToEditRAExpectationDetail.StratagicAction" placeholder="Enter, Resource.StrategicAction)" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End StrategicAction-->
+                                        <!--Begin ProposedYear-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label>
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="txtYear{{$index}}" id="txtYear{{$index}}" class="form-control" uib-datepicker-popup="{{YearFormat}}"
+                                                                       ng-model="actionToEditRAExpectationDetail.ProposedYear" is-open="actionToEditRAExpectationDetail.year" min-date="minDate"
+                                                                       datepicker-options="yearOptions"
+                                                                       close-text="Close" alt-input-formats="'yyyy'" tabindex="2" readonly="readonly" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" name="selectByn{{$index}}" id="selectByn{{$index}}" class="btn btn-icon waves-effect btn-default" ng-click="actionToEditRAExpectationDetail.year=true"
+                                                                            tabindex="2">
+                                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End ProposedYear-->
+                                        <!--Begin DateOfModification-->
+                                        <td class="colTrainingTitle">
+                                            <table>
+                                                <tr ng-repeat="actionToEditRAExpectationDetail in actionToEdit.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                    <td>
+                                                        {{actionToEditRAExpectationDetail.LastModificationDate | toDateString :'UtcTolocalDate'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!--End DateOfModification-->
+                                        <!---->
+                                        <td class="colAction">
+                                            <button type="button" class="btn btn-icon btn-success btn-xs waves-effect waves-light m-r-5" title=".Add"
+                                                    ng-disabled="frmInsterestedPartyEdit.$invalid"
+                                                    ng-click="UpdateInsterestedPartyDetails(frmInsterestedPartyEdit, item, actionToEdit, options);">
+                                                <i class="fa fa-save"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Cancel" ng-click="showHideAction.isEdit=!showHideAction.isEdit;item.isEdit = false;">
+                                                @*CancelEdit();*@
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <tbody ng-if="!options.showRADetails && RiskAssessmentDetail.RAInterestedPartyDetail.length==0">
+                                    <tr>
+                                        <td colspan="10" align="center">
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                                @*<tr ng-if="options.showRADetails" ng-repeat-start="ExpectatioonItem  in item.RAExpectationDetail"></tr>*@
+                                <tbody ng-form="frmInsterestedPartyAdd" ng-if="options.showRADetails">
+                                    <tr ng-if="actionToAdd.actionToAddRAExpectationDetails.length==0" @*ng-if="false"*@>
+                                        <td>
+                                            <label></label>
+                                            <select name="ddlInternalExternal" id="ddlInternalExternal" class="form-control" tabindex="9" ng-change="InternalExternalChange(false,true)"
+                                                    ng-model="actionToAdd.InterestedPartyType" ng-focus="true" ng-selected="actionToAdd.InterestedPartyType == e.Id"
+                                                    ng-options="e.Id as e.Description for e in internalExternalTypes"
+                                        </select>
+
+                                        </td>
+                                        <td>
+                                            <!--Begin Designation if Internal (RUBIS Dpt)-->
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    Country<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlCountry" id="ddlCountry" class="form-control" ng-required="true" tabindex="10"
+                                                        ng-model="actionToAdd.SiteLevelId" ng-focus="true" ng-selected="actionToAdd.SiteLevelId == e.LevelId" ng-change="siteChange(false,true)"
+                                                        ng-options="e.LevelId as e.Name for e in sites">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlCountry.$invalid && frmInsterestedPartyAdd.ddlCountry.$dirty">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Business<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlBusiness" id="ddlBusiness" class="form-control" ng-required="true" tabindex="11"
+                                                        ng-model="actionToAdd.BusinessLevelId" ng-focus="true" ng-selected="actionToAdd.BusinessLevelId == e.LevelId" ng-change="functionChange(false,true)"
+                                                        ng-options="e.LevelId as e.Name for e in gridFunctions">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlBusiness.$invalid && frmInsterestedPartyAdd.ddlBusiness.$dirty">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Depot
+                                                </label>
+                                                <select name="ddlDepot" id="ddlDepot" class="form-control" tabindex="12"
+                                                        ng-model="actionToAdd.DepotLevelId" ng-focus="true" ng-selected="actionToAdd.DepotLevelId == e.LevelId"
+                                                        ng-options="e.LevelId as e.Name for e in gridLocations">
+                                                </select>
+                                            </div>
+                                            <!--End Designation if Internal (RUBIS Dpt)-->
+                                            <!--Begin Designation if Internal/External-->
+                                            <label></label>
+                                            <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.External" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="13"
+                                                    ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in externalTypes">
+                                            </select>
+                                            <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.Internal_Other" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="14"
+                                                    ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in internal_OtherTypes">
+                                            </select>
+                                            <!--End Designation if Internal/External-->
+
+
+                                        </td>
+                                        <td>
+                                            @*<table>
+                                                    <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                        <td>
+                                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.ExpectationDetail" placeholder="@string.Format("{0} {1}", Resource.Enter, Resource.NeedsExpactationsORIssues)" />
+                                                        </td>
+                                                    </tr>
+                                                </table>*@
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-click="addRAExpectationObj(false,true)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <td>
+                                            @*<input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsEnvironmentalIssue" class="form-group" />*@
+                                        </td>
+                                        <td>
+
+                                            @*<input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsComplianceObligation" class="form-group" />*@
+                                        </td>
+                                        <td>
+                                            @*<input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAHSEPortal.HSEPortal" />
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title="@Resource.Add"
+                                                        ng-click="addRAHSEPortalsObj(false,true,expectationIndex)">
+                                                    <i class="zmdi zmdi-add m-r-5"></i>+
+                                                </button>*@
+                                        </td>
+                                        <td>
+                                            @*<input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.StratagicAction" placeholder="@string.Format("{0} {1}", Resource.Enter, Resource.StrategicAction)" />*@
+                                        </td>
+                                        <td>
+                                            @*<div class="form-group">
+                                                    <label>
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="txtYear{{$index}}" id="txtYear{{$index}}" class="form-control" uib-datepicker-popup="{{YearFormat}}"
+                                                               ng-model="actionToAddRAExpectationDetail.ProposedYear" is-open="actionToAddRAExpectationDetail.year" min-date="minDate"
+                                                               datepicker-options="yearOptions"
+                                                               close-text="Close" alt-input-formats="'yyyy'" tabindex="15" readonly="readonly" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" name="selectByn{{$index}}" id="selectByn{{$index}}" class="btn btn-icon waves-effect btn-default" ng-click="actionToAddRAExpectationDetail.year=true"
+                                                                    tabindex="16">
+                                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>*@
+                                        </td>
+                                        <td>
+                                            @*{{actionToAddRAExpectationDetail.LastModificationDate | toDateString :'UtcTolocalDate'}}*@
+                                        </td>
+                                        <td class="colAction">
+                                            <button type="button" class="btn btn-icon btn-success btn-xs waves-effect waves-light m-r-5" title="Add"
+                                                    ng-disabled="frmInsterestedPartyAdd.$invalid"
+                                                    ng-click="AddInsterestedPartyDetails(frmRAExpectationDetailAdd, actionToAdd, options);">
+                                                <i class="fa fa-save"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Cancel"
+                                                    ng-click="options.showRADetails = !options.showRADetails;CancelInsterestedPartyDetails(actionToAdd)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+
+
+
+
+                                    <tr ng-if="false" ng-repeat-start="actionToAddRAExpectationDetail in  actionToAdd.actionToAddRAExpectationDetails"></tr>
+                                    <tr ng-repeat-end ng-repeat="actionToAddRAHSEPortal in  actionToAddRAExpectationDetail.actionToAddRAHSEPortals">
+                                        <td rowspan="{{tempCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <label></label>
+                                            <select name="ddlInternalExternal" id="ddlInternalExternal" class="form-control" tabindex="9" ng-change="InternalExternalChange(false,true)"
+                                                    ng-model="actionToAdd.InterestedPartyType" ng-focus="true" ng-selected="actionToAdd.InterestedPartyType == e.Id"
+                                                    ng-options="e.Id as e.Description for e in internalExternalTypes"
+                                        </select>
+
+
+                                        </td>
+
+                                        <td rowspan="{{tempCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <!--Begin Designation if Internal (RUBIS Dpt)-->
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Country<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlCountry" id="ddlCountry" class="form-control" ng-required="true" tabindex="10"
+                                                        ng-model="actionToAdd.SiteLevelId" ng-focus="true" ng-selected="actionToAdd.SiteLevelId == e.LevelId" ng-change="siteChange(false,true)"
+                                                        ng-options="e.LevelId as e.Name for e in sites">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlCountry.$invalid && frmInsterestedPartyAdd.ddlCountry.$dirty">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Business<span class="required-field"> *</span>
+                                                </label>
+                                                <select name="ddlBusiness" id="ddlBusiness" class="form-control" ng-required="true" tabindex="11"
+                                                        ng-model="actionToAdd.BusinessLevelId" ng-focus="true" ng-selected="actionToAdd.BusinessLevelId == e.LevelId" ng-change="functionChange(false,true)"
+                                                        ng-options="e.LevelId as e.Name for e in gridFunctions">
+                                                </select>
+                                                <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlBusiness.$invalid && frmInsterestedPartyAdd.ddlBusiness.$dirty">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>
+                                                    .Depot
+                                                </label>
+                                                <select name="ddlDepot" id="ddlDepot" class="form-control" tabindex="12"
+                                                        ng-model="actionToAdd.DepotLevelId" ng-focus="true" ng-selected="actionToAdd.DepotLevelId == e.LevelId"
+                                                        ng-options="e.LevelId as e.Name for e in gridLocations">
+                                                </select>
+                                            </div>
+                                            <!--End Designation if Internal (RUBIS Dpt)-->
+                                            <!--Begin Designation if Internal/External-->
+                                            <label></label>
+                                            <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.External" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="13"
+                                                    ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in externalTypes">
+                                            </select>
+                                            <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.Internal_Other" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="14"
+                                                    ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                    ng-options="e.InterestedPartyId as e.Description for e in internal_OtherTypes">
+                                            </select>
+                                            <!--End Designation if Internal/External-->
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.ExpectationDetail" />
+                                            @*<table>
+                                                    <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                        <td>
+                                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.ExpectationDetail" placeholder="@string.Format("{0} {1}", Resource.Enter, Resource.NeedsExpactationsORIssues)" />
+                                                        </td>
+                                                    </tr>
+                                                </table>*@
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-click="addRAExpectationObj(false,true)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+
+                                            <input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsEnvironmentalIssue" class="form-group" />
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+
+                                            <input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsComplianceObligation" class="form-group" />
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAHSEPortal.HSEPortal" />
+                                            <button ng-init="expectationIndex = $parent.$index" type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                    ng-click="addRAHSEPortalsObj(false,true,expectationIndex)">
+                                                <i class="zmdi zmdi-add m-r-5"></i>+
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.StratagicAction" />
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            <div class="form-group">
+                                                <label>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" name="txtYear{{$index}}" id="txtYear{{$index}}" class="form-control" uib-datepicker-popup="{{YearFormat}}"
+                                                           ng-model="actionToAddRAExpectationDetail.ProposedYear" is-open="actionToAddRAExpectationDetail.year" min-date="minDate"
+                                                           datepicker-options="yearOptions"
+                                                           close-text="Close" alt-input-formats="'yyyy'" tabindex="15" readonly="readonly" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" name="selectByn{{$index}}" id="selectByn{{$index}}" class="btn btn-icon waves-effect btn-default" ng-click="actionToAddRAExpectationDetail.year=true"
+                                                                tabindex="16">
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td rowspan="{{$index==0?(actionToAddRAExpectationDetail.actionToAddRAHSEPortals.length):1}}" ng-if="$index==0">
+                                            {{actionToAddRAExpectationDetail.LastModificationDate | toDateString :'UtcTolocalDate'}}
+                                        </td>
+                                        <td class="colAction" rowspan="{{tempCount}}" ng-if="$parent.$index==0 && $index==0">
+                                            <button type="button" class="btn btn-icon btn-success btn-xs waves-effect waves-light m-r-5" title=".Add"
+                                                    ng-disabled="frmInsterestedPartyAdd.$invalid"
+                                                    ng-click="AddInsterestedPartyDetails(frmRAExpectationDetailAdd, actionToAdd, options);">
+                                                <i class="fa fa-save"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Cancel"
+                                                    ng-click="options.showRADetails = !options.showRADetails;CancelInsterestedPartyDetails(actionToAdd)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <tr ng-form="frmInsterestedPartyAdd" @*ng-if="options.showRADetails"*@ ng-if="false">
+                                    <!--Begin Internal/External-->
+                                    <td>
+                                        <label></label>
+                                        <select name="ddlInternalExternal" id="ddlInternalExternal" class="form-control" tabindex="9" ng-change="InternalExternalChange(false,true)"
+                                                ng-model="actionToAdd.InterestedPartyType" ng-focus="true" ng-selected="actionToAdd.InterestedPartyType == e.Id"
+                                                ng-options="e.Id as e.Description for e in internalExternalTypes"
+                                        </select>
+
+                                    </td>
+                                    <!--End Internal/External-->
+                                    <!--Begin Designation-->
+                                    <td class="colTrainingTitle">
+                                        <!--Begin Designation if Internal (RUBIS Dpt)-->
+                                        <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                            <label>
+                                                .Country<span class="required-field"> *</span>
+                                            </label>
+                                            <select name="ddlCountry" id="ddlCountry" class="form-control" ng-required="true" tabindex="10"
+                                                    ng-model="actionToAdd.SiteLevelId" ng-focus="true" ng-selected="actionToAdd.SiteLevelId == e.LevelId" ng-change="siteChange(false,true)"
+                                                    ng-options="e.LevelId as e.Name for e in sites">
+                                            </select>
+                                            <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlCountry.$invalid && frmInsterestedPartyAdd.ddlCountry.$dirty">
+                                                <span data-ng-show="frmInsterestedPartyAdd.ddlCountry.$error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                            <label>
+                                                .Business<span class="required-field"> *</span>
+                                            </label>
+                                            <select name="ddlBusiness" id="ddlBusiness" class="form-control" ng-required="true" tabindex="11"
+                                                    ng-model="actionToAdd.BusinessLevelId" ng-focus="true" ng-selected="actionToAdd.BusinessLevelId == e.LevelId" ng-change="functionChange(false,true)"
+                                                    ng-options="e.LevelId as e.Name for e in gridFunctions">
+                                            </select>
+                                            <div class="badge badge-danger" data-ng-show="frmInsterestedPartyAdd.ddlBusiness.$invalid && frmInsterestedPartyAdd.ddlBusiness.$dirty">
+                                                <span data-ng-show="frmInsterestedPartyAdd.ddlBusiness.$error"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group" ng-if="actionToAdd.InterestedPartyType==enum.InternalExternalTypes.Internal_RUBISDpt">
+                                            <label>
+                                                .Depot
+                                            </label>
+                                            <select name="ddlDepot" id="ddlDepot" class="form-control" tabindex="12"
+                                                    ng-model="actionToAdd.DepotLevelId" ng-focus="true" ng-selected="actionToAdd.DepotLevelId == e.LevelId"
+                                                    ng-options="e.LevelId as e.Name for e in gridLocations">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <!--End Designation if Internal (RUBIS Dpt)-->
+                                        <!--Begin Designation if Internal/External-->
+                                        <label></label>
+                                        <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.External" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="13"
+                                                ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                ng-options="e.InterestedPartyId as e.Description for e in externalTypes">
+                                            <option value=""></option>
+                                        </select>
+                                        <select ng-if="actionToAdd.InterestedPartyType == enum.InternalExternalTypes.Internal_Other" name="ddlInterestedParties" id="ddlInterestedParties" class="form-control" tabindex="14"
+                                                ng-model="actionToAdd.InterestedPartyId" ng-focus="true" ng-selected="actionToAdd.InterestedPartyId == e.InterestedPartyId"
+                                                ng-options="e.InterestedPartyId as e.Description for e in internal_OtherTypes">
+                                        </select>
+                                        <!--End Designation if Internal/External-->
+                                    </td>
+                                    <!--End Designation-->
+                                    <!--Begin NeedsExpactationsORIssues-->
+                                    <td>
+                                        <table>
+                                            <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <td>
+                                                    <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.ExpectationDetail" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                ng-click="addRAExpectationObj(false,true)">
+                                            <i class="zmdi zmdi-add m-r-5"></i>+
+                                        </button>
+                                    </td>
+                                    <!--End NeedsExpactationsORIssues-->
+                                    <!--Begin EnvironmentalIssues-->
+                                    <td class="colTrainingTitle">
+                                        <table ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsEnvironmentalIssue" class="form-group" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!--End EnvironmentalIssues-->
+                                    <!--Begin ComplianceObligations-->
+                                    <td class="colTrainingTitle">
+                                        <table ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" ng-model="actionToAddRAExpectationDetail.IsComplianceObligation" class="form-group" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!--End ComplianceObligations-->
+                                    <!--Begin AddressKeyIssues-->
+                                    <td class="colTrainingTitle">
+                                        <table>
+                                            <tbody ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <tr ng-hide="true" ng-init="expectationIndex = $index"></tr>
+                                                <tr ng-repeat="actionToAddRAHSEPortal in actionToAddRAExpectationDetail.actionToAddRAHSEPortals">
+                                                    <td>
+                                                        <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAHSEPortal.HSEPortal" />
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-xs pull-right m-t-5" title=".Add"
+                                                                ng-click="addRAHSEPortalsObj(false,true,expectationIndex)">
+                                                            <i class="zmdi zmdi-add m-r-5"></i>+
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <!--End AddressKeyIssues-->
+                                    <!--Begin StrategicAction-->
+                                    <td class="colTrainingTitle">
+                                        <table>
+                                            <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <td>
+                                                    <input class="form-control" type="text" maxlength="1000" ng-model="actionToAddRAExpectationDetail.StratagicAction" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!--End StrategicAction-->
+                                    <!--Begin ProposedYear-->
+                                    <td class="colTrainingTitle">
+                                        <table>
+                                            <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label>
+                                                        </label>
+                                                        <div class="input-group">
+                                                            <input type="text" name="txtYear{{$index}}" id="txtYear{{$index}}" class="form-control" uib-datepicker-popup="{{YearFormat}}"
+                                                                   ng-model="actionToAddRAExpectationDetail.ProposedYear" is-open="actionToAddRAExpectationDetail.year" min-date="minDate"
+                                                                   datepicker-options="yearOptions"
+                                                                   close-text="Close" alt-input-formats="'yyyy'" tabindex="15" readonly="readonly" />
+                                                            <span class="input-group-btn">
+                                                                <button type="button" name="selectByn{{$index}}" id="selectByn{{$index}}" class="btn btn-icon waves-effect btn-default" ng-click="actionToAddRAExpectationDetail.year=true"
+                                                                        tabindex="16">
+                                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!--End ProposedYear-->
+                                    <!--Begin DateOfModification-->
+                                    <td class="colTrainingTitle">
+                                        <table>
+                                            <tr ng-repeat="actionToAddRAExpectationDetail in actionToAdd.actionToAddRAExpectationDetails" class="colTrainingTitle">
+                                                <td>
+                                                    {{actionToAddRAExpectationDetail.LastModificationDate | toDateString :'UtcTolocalDate'}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!--End DateOfModification-->
+                                    <!--Begin Action-->
+                                    <td class="colAction">
+
+                                        <button type="button" class="btn btn-icon btn-success btn-xs waves-effect waves-light m-r-5" title=".Add"
+                                                ng-disabled="frmInsterestedPartyAdd.$invalid"
+                                                ng-click="AddInsterestedPartyDetails(frmRAExpectationDetailAdd, actionToAdd, options);">
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title="Cancel"
+                                                ng-click="options.showRADetails = !options.showRADetails;CancelInsterestedPartyDetails(actionToAdd)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                    <!--End Action-->
+                                </tr>
+                            </table>
+
+                            <a class="btn btn-primary waves-effect waves-light btn-xs pull-left m-t-5" ng-disabled="options.showAddAction"
+                               ng-click="options.showRADetails = !options.showRADetails;setFocus();tempCount=0;" tabindex="5">
+                                <i class="zmdi zmdi-accounts-add m-r-5"></i>add
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END ExpectationofInterestedParty Grid-->
+
+            <br />
+            <!--BEGIN RAReviewerTeam -->
+            <!--END RAReviewerTeam -->
+            <br />
+            <!--BEGIN tableParams-->
+            <div class="row align-items-center" ng-if="RARevisionHistory.length != 0">
+                <div class="col-md-7">
+                    <label class="table-title">
+
+                    </label>
+                </div>
+            </div>
+
+            <!--END tableParams-->
+
+            <div class="row">
+                <div class="col-md-8">
+                    @*IsSavebtnDisable ||*@    <button type="button" ng-disabled=" frmRiskAssesment.$invalid  || frmInsterestedPartyAdd.$invalid || frmInsterestedPartyEdit.$invalid" ng-show="RiskAssessmentDetail.IsDraft" ng-click="SaveRiskAssessmentDetail(RiskAssessmentDetail, frmRiskAssesment)" tabindex="7" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        SaveAsDraft
+                    </button>
+                    <button type="submit" class="btn btn-success waves-effect w-md waves-light m-b-5" tabindex="8"
+                            @*IsSavebtnDisable ||*@ ng-disabled="  frmRiskAssesment.$invalid  || frmInsterestedPartyAdd.$invalid || frmInsterestedPartyEdit.$invalid || RiskAssessmentDetail.RAInterestedPartyDetail.length == 0">
+                        {{RiskAssessmentDetail.RiskAssessmentDetailId > 0 ? 'Update' : 'Submit'}}
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(2007)" tabindex="110" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        2007
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(2005)" tabindex="110" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        2005
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(2003)" tabindex="111" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        2003
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(2006)" tabindex="112" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        2006
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(9)" tabindex="113" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        9
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(2004)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        2004
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(3005)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        3005
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(3006)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        3006
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(3007)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        3007
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(4008)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        4008
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" ng-click="EditRiskAssessmentDetailConfiguration(4017)" tabindex="114" class="btn btn-warning waves-effect w-md waves-light m-b-5">
+                        4017
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/Configuration/RiskAssesmentDetail");
+}
+
