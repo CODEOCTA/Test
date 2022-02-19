@@ -1,0 +1,287 @@
+
+<style>
+    .colSrno {
+        width: 20px !important;
+        min-width: 20px !important;
+        max-width: 20px !important;
+    }
+
+    .colGroupName {
+        width: 150px !important;
+        min-width: 150px !important;
+        max-width: 150px !important;
+    }
+
+    .colActive {
+        width: 25px !important;
+        min-width: 25px !important;
+        max-width: 25px !important;
+    }
+
+    .colAction {
+        width: 45px !important;
+        min-width: 45px !important;
+        max-width: 45px !important;
+    }
+
+    .colTraining {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+
+    .colExperience {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+</style>
+<div ng-controller="ExpectationofInterestedPartyCtrl" ng-init="Init()">
+    <form name="frmRiskAssesment" ng-submit="RiskAssessmentDetail.IsDraft = false;SaveRiskAssessmentDetail(RiskAssessmentDetail,frmRiskAssesment)"
+          novalidate>
+        <div class="main-page-title title-icon relative">
+            <!-- start page title-->
+            <h4 class="header-title-sub">
+                <i class="icofont-earth icon-position"></i>
+                ExpectationofInterestedParty
+            </h4>
+            <!-- end page title-->
+            <div class="clearfix">
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="card-box">
+
+
+            <!--BEGIN ExpectationofInterestedParty Grid-->
+            <div class="row m-t-5">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-control-static">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="colTraining">
+                                            Internal/External
+                                        </th>
+                                        <th class="colTraining">
+                                            Designation
+                                        </th>
+                                        <th class="colTraining">
+                                            NeedsExpactationsORIssues
+                                        </th>
+                                        <th class="colAction">
+                                            EnvironmentalIssues
+                                        </th>
+                                        <th class="colAction">
+                                            ComplianceObligations
+                                        </th>
+                                        <th class="colAction">
+                                            AddressKeyIssues
+                                        </th>
+                                        <th class="colAction">
+                                            StrategicAction
+                                        </th>
+                                        <th class="colAction">
+                                            ProposedYear
+                                        </th>
+                                        <th class="colAction">
+                                            DateOfModification
+                                        </th>
+                                        <th class="colAction">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @*<tbody  ng-repeat="item in RiskAssessmentDetail.RAInterestedPartyDetail">
+                                    <tr  ng-repeat-start="ExpectatioonItem  in item.RAExpectationDetail"></tr>
+                                    <tr  ng-repeat-end ng-repeat="RAHSEPortalItem in ExpectatioonItem.RAHSEPortal">
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">{{item.InterestedPartyTypeDescription}}</td>
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                                            <div ng-if="item.InterestedPartyType==InternalExternalTypes.Internal_RUBISDpt">
+                                                <label>.Country </label> <br />
+                                                <span>{{item.CountryDescription}} </span> <br /> <br />
+                                                <label>.Business</label> <br />
+                                                <span>{{item.BusinessDescription}}</span> <br /> <br />
+                                                <label ng-if="item.DepotDescription.length >0">Depot</label> <br />
+                                                <span>{{item.DepotDescription}}</span>
+                                            </div>
+                                            <div ng-if="item.InterestedPartyType==InternalExternalTypes.External || item.InterestedPartyType==InternalExternalTypes.Internal_Other">
+                                                <span>{{item.DesignationDescription}}</span>
+                                            </div>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">
+                                            {{ExpectatioonItem.ExpectationDetail}}
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAExpectationDetailDetails(ExpectatioonItem,insterestedPartyIndex);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsEnvironmentalIssue" ng-disabled="true" class="form-group" /></td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsComplianceObligation" ng-disabled="true" class="form-group" /></td>
+                                        <td>
+                                            {{RAHSEPortalItem.HSEPortal}}
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteRAHSEPortalDetails(RAHSEPortalItem,insterestedPartyIndex,expectationIndex);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.StratagicAction}}</td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.ProposedYear | date  : "yyyy"}}</td>
+                                        <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.LastModificationDate | toDateString :'UtcTolocalDate'}}</td>
+                                        <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                                            <button type="button" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title=".Edit" ng-click="SetEditFlag();EditInsterestedPartyDetails(item, actionToEdit, showHideAction);">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" ng-if="item.RAExpectationDetail.length>0" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                    title="(EditProposedYearOnly)" ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);EditPropossedYrOnly();">
+                                                <i class="fa fa-calendar-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title=".Delete"
+                                                    ng-bootbox-confirm=".AreYouSureYouWantToDelete" ng-bootbox-confirm-action="DeleteInsterestedPartyDetails(item);">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+
+                                   
+                                </tbody>*@
+                            <tbody ng-repeat="item in RiskAssessmentDetail.RAInterestedPartyDetail" ng-init="insterestedPartyIndex = $index">
+
+                                @*<tr ng-repeat-start="item in RiskAssessmentDetail.RAInterestedPartyDetail">
+            <td>{{item.InterestedPartyTypeDescription}} 1st loop </td>
+        </tr>
+        <tr ng-repeat-end="item in RiskAssessmentDetail.RAInterestedPartyDetail">
+            <td>{{item.InterestedPartyTypeDescription}} 2nd loop</td>
+        </tr>*@
+
+
+                                <tr ng-if="false" ng-repeat-start="ExpectatioonItem  in item.RAExpectationDetail">
+                                    <td rowspan="10" >{{item.InterestedPartyTypeDescription}}</td>
+                                    <td rowspan="10" >
+                                        <div ng-if="item.InterestedPartyType==InternalExternalTypes.Internal_RUBISDpt">
+                                            <label>Country </label> <br />
+                                            <span>{{item.CountryDescription}} </span> <br /> <br />
+                                            <label>Business</label> <br />
+                                            <span>{{item.BusinessDescription}}</span> <br /> <br />
+                                            <label ng-if="item.DepotDescription.length >0">Depot</label> <br />
+                                            <span>{{item.DepotDescription}}</span>
+                                        </div>
+                                        <div ng-if="item.InterestedPartyType==InternalExternalTypes.External || item.InterestedPartyType==InternalExternalTypes.Internal_Other">
+                                            <span>{{item.DesignationDescription}}</span>
+                                        </div>
+                                    </td>
+                                    <td rowspan="10" >
+                                        {{ExpectatioonItem.ExpectationDetail}}
+                                        <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title="Delete"
+                                                ng-click="DeleteRAExpectationDetailDetails(ExpectatioonItem,insterestedPartyIndex);">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                    <td rowspan="10" ><input type="checkbox" ng-model="ExpectatioonItem.IsEnvironmentalIssue" ng-disabled="true" class="form-group" /></td>
+                                    <td rowspan="10" ><input type="checkbox" ng-model="ExpectatioonItem.IsComplianceObligation" ng-disabled="true" class="form-group" /></td>
+
+
+
+                                    <td ng-init="expectationIndex = $parent.$index">
+                                        <h1>{{ExpectatioonItem.RAHSEPortal.length}},,,,,,,$index:{{$index}},,,$parent.$index:{{$parent.$index}}</h1>
+                                        <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title="Delete"
+                                                ng-click="DeleteRAHSEPortalDetails(RAHSEPortalItem,insterestedPartyIndex,expectationIndex);">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+
+
+                                    <td rowspan="10" >{{ExpectatioonItem.StratagicAction}}</td>
+                                    <td rowspan="10" >{{ExpectatioonItem.ProposedYear | date  : "yyyy"}}</td>
+                                    <td rowspan="10" >{{ExpectatioonItem.LastModificationDate | toDateString :'UtcTolocalDate'}}</td>
+                                    <td rowspan="10" >
+                                        <button type="button" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                title="Edit" ng-click="SetEditFlag();EditInsterestedPartyDetails(item, actionToEdit, showHideAction);">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" ng-if="item.RAExpectationDetail.length>0" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                                                ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);EditPropossedYrOnly();">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title="Delete"
+                                                ng-click="DeleteInsterestedPartyDetails(item);">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                @*<tr ng-repeat-end ng-if="false"></tr>*@
+                                    <tr  ng-repeat-end ng-repeat="RAHSEPortalItem in ExpectatioonItem.RAHSEPortal">
+                <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">{{item.InterestedPartyTypeDescription}}</td>
+                <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                    <div ng-if="item.InterestedPartyType==InternalExternalTypes.Internal_RUBISDpt">
+                        <label>Country </label> <br />
+                        <span>{{item.CountryDescription}} </span> <br /> <br />
+                        <label>Business</label> <br />
+                        <span>{{item.BusinessDescription}}</span> <br /> <br />
+                        <label ng-if="item.DepotDescription.length >0">Depot</label> <br />
+                        <span>{{item.DepotDescription}}</span>
+                    </div>
+                    <div ng-if="item.InterestedPartyType==InternalExternalTypes.External || item.InterestedPartyType==InternalExternalTypes.Internal_Other">
+                        <span>{{item.DesignationDescription}}</span>
+                    </div>
+                </td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">
+                    {{ExpectatioonItem.ExpectationDetail}}
+                    <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title="Delete"
+                             ng-click="DeleteRAExpectationDetailDetails(ExpectatioonItem,insterestedPartyIndex);">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsEnvironmentalIssue" ng-disabled="true" class="form-group" /></td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0"><input type="checkbox" ng-model="ExpectatioonItem.IsComplianceObligation" ng-disabled="true" class="form-group" /></td>
+                <td ng-init="expectationIndex = $parent.$index">
+                    {{RAHSEPortalItem.HSEPortal}},,$parent.$index:{{$parent.$index}},,,$index: {{$index}}
+                    <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5 delete-btn" title="Delete"
+                            ng-click="DeleteRAHSEPortalDetails(RAHSEPortalItem,insterestedPartyIndex,expectationIndex);">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.StratagicAction}}</td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.ProposedYear | date  : "yyyy"}}</td>
+                <td rowspan="{{$index==0?(ExpectatioonItem.RAHSEPortal.length ):1}}" ng-if="$index==0">{{ExpectatioonItem.LastModificationDate | toDateString :'UtcTolocalDate'}}</td>
+                <td rowspan="{{item.saveRowSpan == 0 ? 1:item.saveRowSpan}}" ng-if="$parent.$index==0 && $index==0">
+                    <button type="button" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                            title="Edit" ng-click="SetEditFlag();EditInsterestedPartyDetails(item, actionToEdit, showHideAction);">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" ng-if="item.RAExpectationDetail.length>0" class="btn btn-icon btn-info btn-xs waves-effect waves-light m-r-5 btn-edit"
+                             ng-click="EditInsterestedPartyDetails(item, actionToEdit, showHideAction);EditPropossedYrOnly();">
+                        <i class="fa fa-calendar-o"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-danger btn-xs waves-effect waves-light m-r-5" title="Delete"
+                             ng-click="DeleteInsterestedPartyDetails(item);">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+            </tr>
+                            </tbody>
+                            </table>
+
+                            <a class="btn btn-primary waves-effect waves-light btn-xs pull-left m-t-5" ng-disabled="options.showAddAction"
+                               ng-click="options.showRADetails = !options.showRADetails;setFocus();tempCount=0;" tabindex="5">
+                                <i class="zmdi zmdi-accounts-add m-r-5"></i>add
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--END ExpectationofInterestedParty Grid-->
+
+           
+
+
+
+        </div>
+    </form>
+</div>
