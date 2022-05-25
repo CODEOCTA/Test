@@ -1,0 +1,45 @@
+
+npm install -g @angular/cli
+-for installing angular cli globally in system
+
+npm install --global @angular/cli@next
+-for installing next version of angular
+
+ng version 
+-to know that angular cli is installed or not and to know current version of it
+
+
+ng new projectName
+-to create a new project file in angular
+
+ng serve
+-to run project on browser
+
+
+ng g m moduleName
+-to create a new module
+
+ng g m moduleName --routing
+-to create a new module and you need routing as well
+
+ng g c componentName
+-to create a component 
+
+ng g c moduleName/componentName
+-to create a component in your specific module
+
+npm i -D typescript@4.4.2
+-to install desirable typescript version
+
+ng test
+- to start automation testing
+
+json-server --watch db.json
+-start json server
+
+npm i --save bootstrap
+-to install bootstrap in project
+other note for this-apply style in angular "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+
+ng serve --port 4202
+-to run application on specific port
