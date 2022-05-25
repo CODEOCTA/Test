@@ -1,0 +1,457 @@
+NPM--provide packages for angular....bcoz it has large amount of library
+-Anugular has MVC based architature
+
+Questions:
+-what is component ?
+-what is Lifecycle ?
+-what is forms ?
+-what is component ?
+
+
+-if you install node then automaticallly NPM is installed.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+*folder structure guide:
+-Most of the time we  will work in SRC folder....if we want to make change in configuration part then we will work outside the SRC folder
+
+-what is package.json file?
+Ans:this is the first file that created initially
+	- it contains....
+		-name of our application
+		-version of our application
+		-some scripts like ng serve,ng build,ng test,ng lint,ng e2e
+		-dependencies of some packages
+		-dev dependencies may be...of some packages
+
+-what is node_modules ?
+Ans:never ever write code in node_module bcoz it will changed for other developer and  will not be available for other developer 
+
+-what is src folder ?
+Ans:95% of the work will be done in this folder.
+	it contains environment,assets folder
+
+	-what is environment folder ?
+	Ans:when you want to defined some different-different configuration 	on different environment. 
+	ex: when we are developing our application then it is dev 	environment 
+	    when we are testing our application then it is testing 	environment 	
+	    when we are our application is on production then it is 	production 	environment
+
+
+	-what is aasets folder ?
+	Ans: when we are gonna use some extra CSS then we will put it here
+
+	-what is index.html file?
+	Ans: this is the first file that is loading on your project when you 	run it on browser.
+
+	what is main.ts file ?
+	Ans: it will make a bridge between angular code and index.html 	file.It has the all major stuff.
+
+	what is style.css ?
+	Ans: you can make by default(globally) syle in it.
+
+	what is app folder ?
+	Ans:In this folder it contains app.module.ts,app.component.ts,app-	routing.module.ts files.
+
+	what is module?
+	Ans: it is collection of components.
+	ex:Users module	
+
+	what is component ?
+	Ans: it is very small functionalities.
+	if you want to make a style taht for a specific code then we 	will 	write it here.
+	ex:user login,user profile...
+
+	what is editorconfig ?
+	Ans:used for making the editor configuration.
+	
+	what is karmaconfiguration ?
+	Ans:maintain the all log for package.json and all version 	controlling and dependencies
+
+	what is tslint?
+	Ans:it will help us to write better code
+	ex. where you have to use cons, let ...keywords etc
+	
+	what is typescriptfile?
+	Ans: this is for typescript configuration
+
+	what is e2e folder?
+	Ans: this means end to end configuraion.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-what is an interpolation ?
+Ans:in simple words "sending a data to component.ts file to component.html."
+
+-what is an variables ?
+Ans:we can not use let or const keyword to define variable..bcoz it is class and classes have properties.
+
+-what is an functions ?
+Ans: we can not use function keword to define a function.simply write a functionName and use "()".
+Ex:foo(){}	
+
+-what it can not do ?
+Ans: binding can not assignment.
+-we can not use window object here directly but can use in proprty.
+
+-what we can do ?
+Ans:we can do arithmatic operation.
+
+-what is an object ?
+Ans:we don't use var keyword in it for creating object nor $scop.
+
+-what is an array ?
+Ans:we don't use var keyword in it for creating object nor $scop.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Q:How to call a function?
+Ans:when we are calling a function or any button click event they both must be define in the same component. 
+Means --> button should be defined inside app.component.html file and function should be defined in app.component.ts file.
+
+Q:how to define a function?
+Ans:
+foo()
+  {
+    return "Pranay Chaudhari"    
+  }
+
+Q:make button and call function on button click..
+Ans:need to use button event
+(click)="foo()"
+
+Q:pass params with function call 
+Ans:(click)="foo('parameter')"
+
+Q:pass property in function params
+Ans:(click)="foo(name)"
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact - 9: Important Events in Angular
+
+Important Event in angular
+click event
+keyup event
+keyup with eneter space
+keydown
+blur
+mouseover and mouse leave
+get values on textbox
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-10: Ways to get input test box value
+get value with value change
+get value with value with button click
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-11: Bind a property with Property binding and Interpolation
+difference b/w Property binding and Interpolation
+-that is Property binding can effect on html element as well as attributes but interpolation not effect on attributes.
+Property binding & Interpolation: Means we need some property of class.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-12: Conditions in Angular
+Make If Condition
+Make If else Condition	
+Make Condition with string
+Make else if Condition		
+Make Conditionwith Property binding 
+
+in order to use else if() we need can do it by Property binding.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-13: Switch case in Angular
+when we have lots of cases then we use switch case instead of if else conditions.
+ex:show data according to months
+
+
+Make a property color
+show data according to color name
+switch case 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-14: For loop in Angular
+make Array
+apply for loop with it
+make a array with object
+apply for loop with it in table
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-15: Simple Form in Angular
+There are two types of forms
+1) Template driven form
+2) Reactive form
+
+What is simple form in angular ?
+ Import form module in module file
+ make a form
+ make a function and get form value
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-16: Make Header and Footer in Angular
+Create Header component
+Create Footer component
+Use both component
+Add style
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-16:Add bootstrap in Angular
+Run command for install bootstrap
+Try with some bootsrap example
+we check and use code from officical website of ng-bootstrap
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-20:Pass data Parent To Child Component in Angular
+Pass data to child component
+make users component
+make it child of app component
+pass data to app to child component
+display data in child component
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-20:Reusable Component in Angular
+Make a user component
+Use it inside app component as child
+Pass data from parent to child
+Use for loop and result child component
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-20:Send data child to Parent Component in Angular
+Make a user component 
+Use it inside app component as child
+Pass data from child to parent with EventEmitter
+-steps to do:
+We will make function in Parent component and will call it from the child
+So in that way we are able to send the data from child to Parent
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-22:Pipe in Angular
+what is pipe?
+pipe is used to change the format of data
+
+pipe with string
+pipe with date
+pipe with slice
+pipe with currency
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-23:Basic Routing in Angular
+make new angular project
+and routing in app-routing-module file
+write code in HTML file for making Routing Link 
+Test Routing
+
+If you did not select routing option on the project making time
+ng generate module app-routing --flat --module=app
+
+stp-1
+for routing we need to add atleast two object inside Routs array in app-routing.module.ts file
+
+const routes: Routes = [
+  {
+    path:'user',
+    component:UserComponent
+  },
+  {
+    path:'admin',
+    component:AdminComponent
+  }
+];
+
+stp-2
+we need to use routerLink="pathName"
+ex.routerLink="user"
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-24:404 page not found in Angular
+what is 404 page?
+make a component
+use it 404 page with wildcard routing
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-25:custom directive in Angular
+what is dirctive ?
+=>use to modify dom element or html element
+example of default directive
+how to make custome directive
+run command ng g directive
+use it with html(Note : directive can be used only in html not in ts file)
+We need help of ElementRef
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-25:Services in Angular
+what is service in angular ?
+Ans:Services is used when we want to share data between two or more components.
+how to make service
+how to use service
+example
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-27:API in Angular 
+what is API?
+how to make service
+how to fetch API data in service
+import in component
+get data in component
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-27:Model in Angular 
+what is model?
+Ans:Module and Model are completely different things.
+To make model is not neccessary. It is an optional.But it is useful to make application robust.And there is less chance of aaplication errors.
+It is data structure of data.It provide the validation to your data.It's a feature of Typescript not Angular.
+how to make it
+how to use it
+with model with other file
+use model with component file
+use model with service file
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-27:Recap Routing and Model in Angular 
+Make Module
+And Coponent inside Module
+Show Module component
+Add Routing and Routing Link
+add Module and Routing
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-27:Routing Module in Angular 
+what is routing module?
+when we define a routing in specific module then it is routing module.
+make module with routing file
+define routing inside module
+make routing link
+test
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-27:Group Routing in Angular 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Lact-34:Lazy Loading in Angular 
+why we need lazy loading?
+Ans:basically when we open angular app without lazy loading by default all routs are loaded at starting.
+By the lazy loading we can control over routing more.
+
+Lact-35: Lazy Loading in Angular(making a function)
+-using button click load different component and change routing 
+We needed for that is 
+1)view container Ref: that is making a container where we can place the loaded component.
+2)Component Factory Resolver: that will make component from code.
+
+ 
+Lact-37:Forms
+1)Reactive form:it control data  in component.ts file
+2)Template driven form:it control and handle data in component.html file
+
+How data flow work?
+foem--->.ts file--->Service----->server
+
+
+Lact-:38:template driven form
+when we have a simple form then we use Template driven form.
+
+Note: Import form module in app.module file
+
+ 
+Lact-:40:template driven form validation
+need to use #fieldName 
+-touched form event is important
+
+
+Lact-:41:template driven form validation:disable submit btn
+email validation
+max and min validation 
+regex validation
+disable submit btn
+
+
+Lact-:42:Pre Filled form 
+done
+
+Lact-:43: Reactive form
+-what is reactive form
+-import ractive form module
+-make html form
+-define form group
+-get form value
+
+
+Lact-:44 : Reactive form Validation
+-make html form
+-define form group
+-get form value
+-apply validation
+
+
+Lact-:45 : Reactive form Validation2
+-use of validators array for different types of validation on input field
+-submit button disable
+
+Lact-:46 : Angular Automation testing
+-Protextor->Run test case on browser.
+-Jasmine-> Testing Environment,Run spec file for test case.
+-Karma->Run test case in multiple browser.
+
+
+Lact-:49 : Angular Automation testing
+-install angular cli
+-make angular project
+-install json api server
+-install postman
+
+Lact-:50 : Postman and json server
+-make resto API json server
+-how to use Postman
+-Test GET,POST,PUT,Delete API
+
+Lact-:51 :Resto app| add routing :make menu
+-add routing for
+add
+update 
+login 
+register
+list of restaurant
+
+Lact-:52 :Resto app| add bootstarp and nav bar
+add bootstrap npm install --save bootstrap
+apply style in angular.json file "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+restart ng server
+apply bootstrap
+add navigation bar
+ 
+Lact-:53 :Resto app| call API service
+start api server :json-server --watch db.json
+make service
+call api in service
+add some data in db.json 
+
+
+Lact-:54 :Resto app| add restaurant form
+-import reactive form
+-make html form with bootstrap
+-make a form group
+-get form value
+
+
+Lact-:55 :Resto app| Sucess Alert and claer form
+-clear form and success alert
+-use bootstrap alert
+-show alert on submit data
+-close function and clear submit function
+
+Lact-:57 :Resto app| Detele Restaurant with API
+Delete operation
+-add font awsome icon
+-service for fire delete api
+-make delete function and call delete api
+
+Lact-:58 :Resto app| Update restaurant form
+Edit operation 
+-add edit icon
+-make parameterized router
+-add form for edit result
+
+
+Lact-:59 :Resto app| Update restaurant DB with API
+get id params from url
+make service function for get api
+call get api for id
+make service function for put api
+patch data in form 
+call update api
+--https://www.typescriptlang.org/tsconfig#noPropertyAccessFromIndexSignature
+--https://stackoverflow.com/questions/57086672/element-implicitly-has-an-any-type-because-expression-of-type-string-cant-b
+
+
+Lact-:60:Resto app| Footer and refactor
+-change home page with listing
+-add new footer
+-add headline for updates restaurant
+-->link valu chhe aama default vali
+
+Lact-:61:Resto app| Register new user
+-make a form
+-get form data
+-make a service function
+-add new user
+
+Lact-:64 Angular 13
+what is view engine?--it is removed in Angular13
+what is lvy engine?--it is added in Angular13
+
+what is use of Rxjs? Ans: used for state management
+
