@@ -1,0 +1,25 @@
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">id</th>
+        <th scope="col">title</th>
+        <th scope="col">author</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ListData">
+        <th>#</th>
+        <th>{{item.id}}</th>
+        <th>{{item.title}}</th>
+        <th>{{item.author}}</th>
+        <th><i (click)="DeleteResto(item.id)" class="fa fa-trash" style="font-size:20px;color:red;"></i>
+          <a routerLink="/update/{{item.id}}">
+            <i class="fa fa-edit" style="font-size:20px;color:blue;"></i>
+          </a>
+        </th>
+      </tr>
+        </tbody>
+  </table>
